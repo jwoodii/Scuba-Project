@@ -95,6 +95,7 @@ return safety;
 	}
 	public static String dive120(int depth, int time) {
 		String interval = "";
+		System.out.println("hello");
 		return interval;
 		
 	}
