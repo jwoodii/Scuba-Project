@@ -6,7 +6,7 @@ public class BackEnd {
 
 	}
 	public static String diveCalc(int depth, int time) {
-		String interval = "";
+		String safety = "";
 		int x = depth%10;
 		int y = 0;
 
@@ -21,37 +21,37 @@ public class BackEnd {
 			depth = 40;
 		}
 		if(depth == 40) {
-			interval = dive40(depth,time);
+			safety = dive40(depth,time);
 		}
 		else if (depth == 50) {
-			interval = dive50(depth,time);
+			safety = dive50(depth,time);
 		}
 		else if (depth == 60) {
-			interval = dive60(depth,time);
+			safety = dive60(depth,time);
 		}
 		else if (depth == 70) {
-			interval = dive70(depth,time);
+			safety = dive70(depth,time);
 		}
 		else if (depth == 80) {
-			interval = dive80(depth,time);
+			safety = dive80(depth,time);
 		}
 		else if (depth == 90) {
-			interval = dive90(depth,time);
+			safety = dive90(depth,time);
 		}
 		else if (depth == 100) {
-			interval = dive100(depth,time);
+			safety = dive100(depth,time);
 		}
 		else if (depth == 110) {
-			interval = dive110(depth,time);
+			safety = dive110(depth,time);
 		}
 		else if (depth == 120) {
-			interval = dive120(depth,time);
+			safety = dive120(depth,time);
 		}
 		else if (depth == 130) {
-			interval = dive130(depth,time);
+			safety = dive130(depth,time);
 		}
 		
-return interval;
+return safety;
 	}
 	public static String dive40(int depth, int time) {
 		String interval = "";
