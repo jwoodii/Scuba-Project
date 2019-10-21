@@ -298,22 +298,94 @@ return safety;
 	}
 	public static String dive100(int depth, int time) {
 		String safety = "";
+		if(time > 40) {
+      return "Invalid Time";
+    }
+    else if(time > 25) {
+      safety = "You need to stop at 15 minutes at 15'. You are in group K.";
+    }
+    else if(time > 22){
+      safety = "You need to stop at 5 minutes at 15'. You are in group H.";
+    }
+    else if (time > 20) {
+      safety = "You are in group G.";
+      }
+    else if (time > 15) {
+      safety = "You are in group F";  
+      }
+    else if (time > 10) {
+      safety = "You are in group E";  
+      }
+    else if (time > 7) {
+      safety = "You are in group D";  
+      }
+    else if (time <= 5) {
+      safety = "You are in group C";  
+      }
 		return safety;
 		
 	}
 	public static String dive110(int depth, int time) {
 		String safety = "";
+		if(time > 30) {
+      return "Invalid Time";
+    }
+    else if(time > 20) {
+      safety = "You need to stop at 7 minutes at 15'. You are in group J.";
+    }
+    else if(time > 15){
+      safety = "You need to stop at 5 minutes at 15'. You are in group G.";
+    }
+    else if (time > 13) {
+      safety = "You are in group F.";
+      }
+    else if (time > 10) {
+      safety = "You are in group E";  
+      }
+    else if (time <= 5) {
+      safety = "You are in group D";  
+      }
 		return safety;
 		
 	}
 	public static String dive120(int depth, int time) {
 		String safety = "";
+		if(time > 30) {
+      return "Invalid Time";
+    }
+    else if(time > 25) {
+      safety = "You need to stop at 14 minutes at 15'. You are in group J.";
+    }
+    else if(time > 15){
+      safety = "You need to stop at 6 minutes at 15'. You are in group I.";
+    }
+    else if (time > 12) {
+      safety = "You need to stop at 5 minutes at 15. You are in group F.";
+      }
+    else if (time > 10) {
+      safety = "You are in group E";  
+      }
+    else if (time <= 5) {
+      safety = "You are in group D";  
+      }
 		return safety;
 
 		
 	}
 	public static String dive130(int depth, int time) {
 		String safety = "";
+		if(time > 25) {
+      return "Invalid Time";
+    }
+    else if(time > 10) {
+      safety = "You need to stop at 10 minutes at 15'. You are in group J.";
+    }
+    else if(time > 8){
+      safety = "You need to stop at 5 minutes at 15'. You are in group E.";
+    }
+    else if (time <= 5) {
+      safety = "You are in group D.";
+      }
 		return safety;
 		
 	}
