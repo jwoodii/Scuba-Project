@@ -3,16 +3,16 @@ import java.util.Scanner;
 public class BackEnd {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		boolean x = true;
 		Scanner scan = new Scanner(System.in);
-		while(true) {
+		while(x) {
 			System.out.println("Please enter in a Depth in feet");
 			int depth = scan.nextInt();
 			System.out.println("Please enter in a Time in feet");
 			int time = scan.nextInt();
 			System.out.println(diveCalc(depth, time));
 		}
-
+		scan.close();
 	}
 	public static String diveCalc(int depth, int time) {
 		String safety = "";
@@ -317,10 +317,13 @@ return safety;
       safety = "You are in group E";  
       }
     else if (time > 7) {
-      safety = "You are in group D";  
+      safety = "You are in group D";
       }
+    else if (time > 5) {
+    	safety = "You are in group C.";
+    }
     else if (time <= 5) {
-      safety = "You are in group C";  
+      safety = "You are in group B";  
       }
 		return safety;
 		
@@ -342,8 +345,11 @@ return safety;
     else if (time > 10) {
       safety = "You are in group E";  
       }
+    else if (time > 5) {
+    	safety = "You are in group D.";
+    }
     else if (time <= 5) {
-      safety = "You are in group D";  
+      safety = "You are in group C";  
       }
 		return safety;
 		
@@ -365,8 +371,11 @@ return safety;
     else if (time > 10) {
       safety = "You are in group E";  
       }
+    else if (time > 5) {
+      safety = "You are in group D.";
+    }
     else if (time <= 5) {
-      safety = "You are in group D";  
+      safety = "You are in group C";  
       }
 		return safety;
 
@@ -383,9 +392,12 @@ return safety;
     else if(time > 8){
       safety = "You need to stop at 5 minutes at 15'. You are in group E.";
     }
-    else if (time <= 5) {
+    else if (time > 5) {
       safety = "You are in group D.";
       }
+    else if (time <= 5) {
+    	safety = "You are in group C.";
+    }
 		return safety;
 		
 	}
