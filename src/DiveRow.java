@@ -3,6 +3,7 @@ public class DiveRow {
 	int depth;
 	DiveCell[] diveRow;
 	int length;
+	
 	public DiveRow(int depth, DiveCell[] diveRow, int length) {
 		super();
 		this.depth = depth;
@@ -14,7 +15,8 @@ public class DiveRow {
 	}
 	public DiveRow(int depth, int length) {
 		this.depth = depth;
-		this.diveRow =;
+		this.diveRow = new DiveCell[length];
+
 	}
 	public int getDepth() {
 		return depth;

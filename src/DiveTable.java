@@ -7,8 +7,8 @@ public class DiveTable {
 		this.diveTable = diveTable;
 		this.length = diveTable.length;
 	}
-	public DiveTable() {
-		// TODO Auto-generated constructor stub
+	public DiveTable(int length) {
+		this.diveTable = new DiveRow[length];
 	}
 	public DiveRow[] getDiveTable() {
 		return diveTable;
