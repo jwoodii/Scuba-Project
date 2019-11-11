@@ -1,10 +1,11 @@
 import java.util.Scanner;
 
 public class BackEnd {
-
+	public static DiveTable table = new DiveTable();
 	public static void main(String[] args) {
 		boolean x = true;
 		Scanner scan = new Scanner(System.in);
+		generateDiveTable();
 		while(x) {
 			System.out.println("Please enter in a Depth in feet");
 			int depth = scan.nextInt();
@@ -13,6 +14,23 @@ public class BackEnd {
 			System.out.println(diveCalc(depth, time));
 		}
 		scan.close();
+	}
+	
+	public static void generateDiveTable() {
+		table.diveTable[0] = new DiveRow(40,12);
+		table.diveTable[0].diveRow[0] = new DiveCell(40,5,"A",false,0);
+		table.diveTable[0].diveRow[1] = new DiveCell(40,15,"B", false,0);
+		table.diveTable[0].diveRow[2] = new DiveCell(40,25,"C", false,0);
+		table.diveTable[0].diveRow[3] = new DiveCell(40,30,"D", false,0);
+		table.diveTable[0].diveRow[4] = new DiveCell(40,40,"E", false,0);
+		table.diveTable[0].diveRow[5] = new DiveCell(40,50,"F", false,0);
+		table.diveTable[0].diveRow[6] = new DiveCell(40,70,"G", false,0);
+		table.diveTable[0].diveRow[7] = new DiveCell(40,80,"H", false,0);
+		table.diveTable[0].diveRow[8] = new DiveCell(40,100,"I", false,0);
+		table.diveTable[0].diveRow[9] = new DiveCell(40,110,"J", false,0);
+		table.diveTable[0].diveRow[10] = new DiveCell(40,130,"K", false,0);
+		table.diveTable[0].diveRow[11] = new DiveCell(40,150,"L", true,5);
+		table.diveTable[1] = new DiveRow(50);
 	}
 	public static String diveCalc(int depth, int time) {
 		String safety = "";
@@ -26,6 +44,7 @@ public class BackEnd {
 		//Rounds depth to the nearest 10.
 		depth = ((depth/10) + y) * 10;
 		//if depth is less than 40 assume depth 40 for calculations
+		
 		if(depth < 40) {
 			depth = 40;
 		}
