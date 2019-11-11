@@ -4,17 +4,19 @@ public class BackEnd {
 	public static DiveTable table = new DiveTable(10);
 
 	public static void main(String[] args) {
-		//boolean x = true;
+		// boolean x = true;
 		Scanner scan = new Scanner(System.in);
 		generateDiveTable();
-		for (int i = 0; i < 12; i++) {
-			System.out.println("Row Depth " + table.diveTable[0].depth);
-			System.out.println("Depth " + table.diveTable[0].diveRow[i].depth);
-			System.out.println("Time " + table.diveTable[0].diveRow[i].time);
-			System.out.println("Group " + table.diveTable[0].diveRow[i].group);
-			System.out.println("Safety Stop " + table.diveTable[0].diveRow[i].safetyStop);
-			System.out.println("Stop Time " + table.diveTable[0].diveRow[i].stopTime);
-			System.out.println();
+		for (int j = 0; j < 10; j++) {
+			for (int i = 0; i < 12; i++) {
+				System.out.println("Row Depth " + table.diveTable[j].depth);
+				System.out.println("Depth " + table.diveTable[j].diveRow[i].depth);
+				System.out.println("Time " + table.diveTable[j].diveRow[i].time);
+				System.out.println("Group " + table.diveTable[j].diveRow[i].group);
+				System.out.println("Safety Stop " + table.diveTable[j].diveRow[i].safetyStop);
+				System.out.println("Stop Time " + table.diveTable[j].diveRow[i].stopTime);
+				System.out.println();
+			}
 		}
 
 		/*
@@ -27,52 +29,73 @@ public class BackEnd {
 
 	public static void generateDiveTable() {
 		table.diveTable[0] = new DiveRow(40, 12);
-		table.diveTable[0].diveRow[0] = new DiveCell(40, 5, "A", false, 0);
-		table.diveTable[0].diveRow[1] = new DiveCell(40, 15, "B", false, 0);
-		table.diveTable[0].diveRow[2] = new DiveCell(40, 25, "C", false, 0);
-		table.diveTable[0].diveRow[3] = new DiveCell(40, 30, "D", false, 0);
-		table.diveTable[0].diveRow[4] = new DiveCell(40, 40, "E", false, 0);
-		table.diveTable[0].diveRow[5] = new DiveCell(40, 50, "F", false, 0);
-		table.diveTable[0].diveRow[6] = new DiveCell(40, 70, "G", false, 0);
-		table.diveTable[0].diveRow[7] = new DiveCell(40, 80, "H", false, 0);
-		table.diveTable[0].diveRow[8] = new DiveCell(40, 100, "I", false, 0);
-		table.diveTable[0].diveRow[9] = new DiveCell(40, 110, "J", false, 0);
-		table.diveTable[0].diveRow[10] = new DiveCell(40, 130, "K", false, 0);
-		table.diveTable[0].diveRow[11] = new DiveCell(40, 150, "L", true, 5);
+		table.diveTable[0].diveRow[0] = new DiveCell(table.diveTable[0].depth, 5, "A", false, 0);
+		table.diveTable[0].diveRow[1] = new DiveCell(table.diveTable[0].depth, 15, "B", false, 0);
+		table.diveTable[0].diveRow[2] = new DiveCell(table.diveTable[0].depth, 25, "C", false, 0);
+		table.diveTable[0].diveRow[3] = new DiveCell(table.diveTable[0].depth, 30, "D", false, 0);
+		table.diveTable[0].diveRow[4] = new DiveCell(table.diveTable[0].depth, 40, "E", false, 0);
+		table.diveTable[0].diveRow[5] = new DiveCell(table.diveTable[0].depth, 50, "F", false, 0);
+		table.diveTable[0].diveRow[6] = new DiveCell(table.diveTable[0].depth, 70, "G", false, 0);
+		table.diveTable[0].diveRow[7] = new DiveCell(table.diveTable[0].depth, 80, "H", false, 0);
+		table.diveTable[0].diveRow[8] = new DiveCell(table.diveTable[0].depth, 100, "I", false, 0);
+		table.diveTable[0].diveRow[9] = new DiveCell(table.diveTable[0].depth, 110, "J", false, 0);
+		table.diveTable[0].diveRow[10] = new DiveCell(table.diveTable[0].depth, 130, "K", false, 0);
+		table.diveTable[0].diveRow[11] = new DiveCell(table.diveTable[0].depth, 150, "L", true, 5);
 		table.diveTable[1] = new DiveRow(50, 10);
-		table.diveTable[1].diveRow[0] = new DiveCell(50, 10, "B", false, 0);
-		table.diveTable[1].diveRow[1] = new DiveCell(50, 15, "C", false, 0);
-		table.diveTable[1].diveRow[2] = new DiveCell(50, 25, "D", false, 0);
-		table.diveTable[1].diveRow[3] = new DiveCell(50, 30, "E", false, 0);
-		table.diveTable[1].diveRow[4] = new DiveCell(50, 40, "F", false, 0);
-		table.diveTable[1].diveRow[5] = new DiveCell(50, 50, "G", false, 0);
-		table.diveTable[1].diveRow[6] = new DiveCell(50, 60, "H", false, 0);
-		table.diveTable[1].diveRow[7] = new DiveCell(50, 70, "I", false, 0);
-		table.diveTable[1].diveRow[8] = new DiveCell(50, 80, "J", false, 0);
-		table.diveTable[1].diveRow[9] = new DiveCell(50, 100, "L", true, 5);
+		table.diveTable[1].diveRow[0] = new DiveCell(table.diveTable[1].depth, 10, "B", false, 0);
+		table.diveTable[1].diveRow[1] = new DiveCell(table.diveTable[1].depth, 15, "C", false, 0);
+		table.diveTable[1].diveRow[2] = new DiveCell(table.diveTable[1].depth, 25, "D", false, 0);
+		table.diveTable[1].diveRow[3] = new DiveCell(table.diveTable[1].depth, 30, "E", false, 0);
+		table.diveTable[1].diveRow[4] = new DiveCell(table.diveTable[1].depth, 40, "F", false, 0);
+		table.diveTable[1].diveRow[5] = new DiveCell(table.diveTable[1].depth, 50, "G", false, 0);
+		table.diveTable[1].diveRow[6] = new DiveCell(table.diveTable[1].depth, 60, "H", false, 0);
+		table.diveTable[1].diveRow[7] = new DiveCell(table.diveTable[1].depth, 70, "I", false, 0);
+		table.diveTable[1].diveRow[8] = new DiveCell(table.diveTable[1].depth, 80, "J", false, 0);
+		table.diveTable[1].diveRow[9] = new DiveCell(table.diveTable[1].depth, 100, "L", true, 5);
 		table.diveTable[2] = new DiveRow(60, 10);
-		table.diveTable[2].diveRow[0] = new DiveCell(60, 10, "B", false, 0);
-		table.diveTable[2].diveRow[1] = new DiveCell(60, 15, "C", false, 0);
-		table.diveTable[2].diveRow[2] = new DiveCell(60, 20, "D", false, 0);
-		table.diveTable[2].diveRow[3] = new DiveCell(60, 25, "E", false, 0);
-		table.diveTable[2].diveRow[4] = new DiveCell(60, 30, "F", false, 0);
-		table.diveTable[2].diveRow[5] = new DiveCell(60, 40, "G", false, 0);
-		table.diveTable[2].diveRow[6] = new DiveCell(60, 50, "H", false, 0);
-		table.diveTable[2].diveRow[7] = new DiveCell(60, 55, "I", false, 0);
-		table.diveTable[2].diveRow[8] = new DiveCell(60, 60, "J", true, 5);
-		table.diveTable[2].diveRow[9] = new DiveCell(60, 80, "L", true, 7);
+		table.diveTable[2].diveRow[0] = new DiveCell(table.diveTable[2].depth, 10, "B", false, 0);
+		table.diveTable[2].diveRow[1] = new DiveCell(table.diveTable[2].depth, 15, "C", false, 0);
+		table.diveTable[2].diveRow[2] = new DiveCell(table.diveTable[2].depth, 20, "D", false, 0);
+		table.diveTable[2].diveRow[3] = new DiveCell(table.diveTable[2].depth, 25, "E", false, 0);
+		table.diveTable[2].diveRow[4] = new DiveCell(table.diveTable[2].depth, 30, "F", false, 0);
+		table.diveTable[2].diveRow[5] = new DiveCell(table.diveTable[2].depth, 40, "G", false, 0);
+		table.diveTable[2].diveRow[6] = new DiveCell(table.diveTable[2].depth, 50, "H", false, 0);
+		table.diveTable[2].diveRow[7] = new DiveCell(table.diveTable[2].depth, 55, "I", false, 0);
+		table.diveTable[2].diveRow[8] = new DiveCell(table.diveTable[2].depth, 60, "J", true, 5);
+		table.diveTable[2].diveRow[9] = new DiveCell(table.diveTable[2].depth, 80, "L", true, 7);
 		table.diveTable[2] = new DiveRow(70, 11);
-		table.diveTable[2].diveRow[0] = new DiveCell(70, 10, "B", false, 0);
-		table.diveTable[2].diveRow[1] = new DiveCell(70, 15, "C", false, 0);
-		table.diveTable[2].diveRow[2] = new DiveCell(70, 20, "D", false, 0);
-		table.diveTable[2].diveRow[3] = new DiveCell(70, 25, "E", false, 0);
-		table.diveTable[2].diveRow[4] = new DiveCell(70, 30, "F", false, 0);
-		table.diveTable[2].diveRow[5] = new DiveCell(70, 40, "G", false, 0);
-		table.diveTable[2].diveRow[6] = new DiveCell(70, 50, "H", false, 0);
-		table.diveTable[2].diveRow[7] = new DiveCell(70, 55, "I", false, 0);
-		table.diveTable[2].diveRow[8] = new DiveCell(70, 60, "J", true, 5);
-		table.diveTable[2].diveRow[9] = new DiveCell(70, 80, "L", true, 7);
-		table.diveTable[2].diveRow[9] = new DiveCell(70, 80, "L", true, 7);
+		table.diveTable[2].diveRow[0] = new DiveCell(table.diveTable[2].depth, 5, "B", true, 7);
+		table.diveTable[2].diveRow[1] = new DiveCell(table.diveTable[2].depth, 10, "C", false, 0);
+		table.diveTable[2].diveRow[2] = new DiveCell(table.diveTable[2].depth, 15, "D", false, 0);
+		table.diveTable[2].diveRow[3] = new DiveCell(table.diveTable[2].depth, 20, "E", false, 0);
+		table.diveTable[2].diveRow[4] = new DiveCell(table.diveTable[2].depth, 30, "F", false, 0);
+		table.diveTable[2].diveRow[5] = new DiveCell(table.diveTable[2].depth, 35, "G", false, 0);
+		table.diveTable[2].diveRow[6] = new DiveCell(table.diveTable[2].depth, 40, "H", false, 0);
+		table.diveTable[2].diveRow[7] = new DiveCell(table.diveTable[2].depth, 45, "I", false, 0);
+		table.diveTable[2].diveRow[8] = new DiveCell(table.diveTable[2].depth, 50, "J", true, 5);
+		table.diveTable[2].diveRow[9] = new DiveCell(table.diveTable[2].depth, 60, "K", true, 8);
+		table.diveTable[2].diveRow[10] = new DiveCell(table.diveTable[2].depth, 70, "L", true, 14);
+		table.diveTable[3] = new DiveRow(80, 10);
+		table.diveTable[3].diveRow[0] = new DiveCell(table.diveTable[3].depth, 5, "B", false, 0);
+		table.diveTable[3].diveRow[1] = new DiveCell(table.diveTable[3].depth, 10, "C", false, 0);
+		table.diveTable[3].diveRow[2] = new DiveCell(table.diveTable[3].depth, 15, "D", false, 0);
+		table.diveTable[3].diveRow[3] = new DiveCell(table.diveTable[3].depth, 20, "E", false, 0);
+		table.diveTable[3].diveRow[4] = new DiveCell(table.diveTable[3].depth, 25, "F", false, 0);
+		table.diveTable[3].diveRow[5] = new DiveCell(table.diveTable[3].depth, 30, "G", false, 0);
+		table.diveTable[3].diveRow[6] = new DiveCell(table.diveTable[3].depth, 35, "H", false, 0);
+		table.diveTable[3].diveRow[7] = new DiveCell(table.diveTable[3].depth, 40, "I", true, 5);
+		table.diveTable[3].diveRow[8] = new DiveCell(table.diveTable[3].depth, 50, "K", true, 10);
+		table.diveTable[3].diveRow[9] = new DiveCell(table.diveTable[3].depth, 60, "L", true, 17);
+		table.diveTable[4] = new DiveRow(90, 9);
+		table.diveTable[4].diveRow[0] = new DiveCell(table.diveTable[4].depth, 5, "B", false, 0);
+		table.diveTable[4].diveRow[1] = new DiveCell(table.diveTable[4].depth, 10, "C", false, 0);
+		table.diveTable[4].diveRow[2] = new DiveCell(table.diveTable[4].depth, 12, "D", false, 0);
+		table.diveTable[4].diveRow[3] = new DiveCell(table.diveTable[4].depth, 15, "E", false, 0);
+		table.diveTable[4].diveRow[4] = new DiveCell(table.diveTable[4].depth, 20, "F", false, 0);
+		table.diveTable[4].diveRow[5] = new DiveCell(table.diveTable[4].depth, 25, "G", false, 0);
+		table.diveTable[4].diveRow[6] = new DiveCell(table.diveTable[4].depth, 30, "H", true, 5);
+		table.diveTable[4].diveRow[7] = new DiveCell(table.diveTable[4].depth, 40, "J", true, 7);
+		table.diveTable[4].diveRow[8] = new DiveCell(table.diveTable[4].depth, 50, "L", true, 18);
 	}
 
 	public static String diveCalc(int depth, int time) {

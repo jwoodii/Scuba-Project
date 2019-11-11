@@ -16,6 +16,7 @@ public class DiveRow {
 	public DiveRow(int depth, int length) {
 		this.depth = depth;
 		this.diveRow = new DiveCell[length];
+		this.length = length;
 
 	}
 	public int getDepth() {
