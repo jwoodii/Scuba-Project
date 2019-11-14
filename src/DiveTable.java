@@ -9,6 +9,7 @@ public class DiveTable {
 	}
 	public DiveTable(int length) {
 		this.diveTable = new DiveRow[length];
+		this.length = length;
 	}
 	public DiveRow[] getDiveTable() {
 		return diveTable;
