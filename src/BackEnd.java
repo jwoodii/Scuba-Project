@@ -12,7 +12,15 @@ public class BackEnd {
 			int depth = scan.nextInt();
 			System.out.println("Please enter in a Time in minutes");
 			int time = scan.nextInt();
+			if (depth == 0) {
+				System.out.println(maxDepthForTime(time));
+			}
+			else if(time == 0) {
+				System.out.println(maxTimeForDepth(depth));
+			}
+			else {
 			System.out.println(diveCalc(depth, time));
+			}
 		}
 
 		scan.close();
@@ -129,6 +137,25 @@ public class BackEnd {
 
 	}
 
+	public static String maxTimeForDepth(int depth) {
+		String safety = "";
+		for(int i =0; i < table.diveTable.length; i++) {
+			if(table.diveTable[i].depth == depth) {
+				int length = table.diveTable[i].length - 1;
+				if(table.diveTable[i].diveRow[length].safetyStop) {
+					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at " + depth + ". You will need to stop " + table.diveTable[i].diveRow[length].stopTime + " minutes at 15'.";
+				}
+
+				while (table.diveTable[i].diveRow[length].safetyStop) {
+					length--;
+				}
+				
+				return "You can dive for " + table.diveTable[i].diveRow[length].time + " minutes without making a safety stop. " + safety; 
+			}
+		}
+		return safety;
+	}
+
 	public static String maxDepthForTime(int time) {
 		// to keep the while loop running
 		boolean go = true;
@@ -164,6 +191,9 @@ public class BackEnd {
 		return safety;
 	}
 
+	/*
+	 * we have verified that both time and depth are non zero integer at this point.
+	 */
 	public static String diveCalc(int depth, int time) {
 		// if the depth is above the max depth we can automatically return invalid
 		// depth. this
@@ -172,13 +202,6 @@ public class BackEnd {
 		if (depth > table.diveTable[table.diveTable.length - 1].depth) {
 			return "Invalid Depth";
 		}
-		if (depth == 0) {
-			return maxDepthForTime(time);
-		}
-		/*
-		 * add in time = 0 check to give max time you can dive at depth x.
-		 */
-
 		// if depth is valid we move on.
 		String safety = "";
 		// x checks to see if depth is a multiple of ten while y gets the tens place.
