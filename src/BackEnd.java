@@ -4,29 +4,22 @@ public class BackEnd {
 	public static DiveTable table = new DiveTable(10);
 
 	public static void main(String[] args) {
-		// boolean x = true;
+		boolean x = true;
 		Scanner scan = new Scanner(System.in);
 		generateDiveTable();
-		for (int j = 0; j < 10; j++) {
-			for (int i = 0; i < 12; i++) {
-				System.out.println("Row Depth " + table.diveTable[j].depth);
-				System.out.println("Depth " + table.diveTable[j].diveRow[i].depth);
-				System.out.println("Time " + table.diveTable[j].diveRow[i].time);
-				System.out.println("Group " + table.diveTable[j].diveRow[i].group);
-				System.out.println("Safety Stop " + table.diveTable[j].diveRow[i].safetyStop);
-				System.out.println("Stop Time " + table.diveTable[j].diveRow[i].stopTime);
-				System.out.println();
-			}
+		while (x) {
+			System.out.println("Please enter in a Depth in feet");
+			int depth = scan.nextInt();
+			System.out.println("Please enter in a Time in minutes");
+			int time = scan.nextInt();
+			System.out.println(diveCalc(depth, time));
 		}
 
-		/*
-		 * while(x) { System.out.println("Please enter in a Depth in feet"); int depth =
-		 * scan.nextInt(); System.out.println("Please enter in a Time in feet"); int
-		 * time = scan.nextInt(); System.out.println(diveCalc(depth, time)); }
-		 */
 		scan.close();
 	}
 
+	// dive table based on NAUI Dive table. built as array to allow for easy change.
+	// builds dive table
 	public static void generateDiveTable() {
 		table.diveTable[0] = new DiveRow(40, 12);
 		table.diveTable[0].diveRow[0] = new DiveCell(table.diveTable[0].depth, 5, "A", false, 0);
@@ -41,7 +34,7 @@ public class BackEnd {
 		table.diveTable[0].diveRow[9] = new DiveCell(table.diveTable[0].depth, 110, "J", false, 0);
 		table.diveTable[0].diveRow[10] = new DiveCell(table.diveTable[0].depth, 130, "K", false, 0);
 		table.diveTable[0].diveRow[11] = new DiveCell(table.diveTable[0].depth, 150, "L", true, 5);
-		
+
 		table.diveTable[1] = new DiveRow(50, 10);
 		table.diveTable[1].diveRow[0] = new DiveCell(table.diveTable[1].depth, 10, "B", false, 0);
 		table.diveTable[1].diveRow[1] = new DiveCell(table.diveTable[1].depth, 15, "C", false, 0);
@@ -53,7 +46,7 @@ public class BackEnd {
 		table.diveTable[1].diveRow[7] = new DiveCell(table.diveTable[1].depth, 70, "I", false, 0);
 		table.diveTable[1].diveRow[8] = new DiveCell(table.diveTable[1].depth, 80, "J", false, 0);
 		table.diveTable[1].diveRow[9] = new DiveCell(table.diveTable[1].depth, 100, "L", true, 5);
-		
+
 		table.diveTable[2] = new DiveRow(60, 10);
 		table.diveTable[2].diveRow[0] = new DiveCell(table.diveTable[2].depth, 10, "B", false, 0);
 		table.diveTable[2].diveRow[1] = new DiveCell(table.diveTable[2].depth, 15, "C", false, 0);
@@ -65,7 +58,7 @@ public class BackEnd {
 		table.diveTable[2].diveRow[7] = new DiveCell(table.diveTable[2].depth, 55, "I", false, 0);
 		table.diveTable[2].diveRow[8] = new DiveCell(table.diveTable[2].depth, 60, "J", true, 5);
 		table.diveTable[2].diveRow[9] = new DiveCell(table.diveTable[2].depth, 80, "L", true, 7);
-		
+
 		table.diveTable[3] = new DiveRow(70, 11);
 		table.diveTable[3].diveRow[0] = new DiveCell(table.diveTable[3].depth, 5, "B", true, 7);
 		table.diveTable[3].diveRow[1] = new DiveCell(table.diveTable[3].depth, 10, "C", false, 0);
@@ -78,7 +71,7 @@ public class BackEnd {
 		table.diveTable[3].diveRow[8] = new DiveCell(table.diveTable[3].depth, 50, "J", true, 5);
 		table.diveTable[3].diveRow[9] = new DiveCell(table.diveTable[3].depth, 60, "K", true, 8);
 		table.diveTable[3].diveRow[10] = new DiveCell(table.diveTable[3].depth, 70, "L", true, 14);
-		
+
 		table.diveTable[4] = new DiveRow(80, 10);
 		table.diveTable[4].diveRow[0] = new DiveCell(table.diveTable[4].depth, 5, "B", false, 0);
 		table.diveTable[4].diveRow[1] = new DiveCell(table.diveTable[4].depth, 10, "C", false, 0);
@@ -90,7 +83,7 @@ public class BackEnd {
 		table.diveTable[4].diveRow[7] = new DiveCell(table.diveTable[4].depth, 40, "I", true, 5);
 		table.diveTable[4].diveRow[8] = new DiveCell(table.diveTable[4].depth, 50, "K", true, 10);
 		table.diveTable[4].diveRow[9] = new DiveCell(table.diveTable[4].depth, 60, "L", true, 17);
-		
+
 		table.diveTable[5] = new DiveRow(90, 9);
 		table.diveTable[5].diveRow[0] = new DiveCell(table.diveTable[5].depth, 5, "B", false, 0);
 		table.diveTable[5].diveRow[1] = new DiveCell(table.diveTable[5].depth, 10, "C", false, 0);
@@ -101,7 +94,7 @@ public class BackEnd {
 		table.diveTable[5].diveRow[6] = new DiveCell(table.diveTable[5].depth, 30, "H", true, 5);
 		table.diveTable[5].diveRow[7] = new DiveCell(table.diveTable[5].depth, 40, "J", true, 7);
 		table.diveTable[5].diveRow[8] = new DiveCell(table.diveTable[5].depth, 50, "L", true, 18);
-		
+
 		table.diveTable[6] = new DiveRow(100, 8);
 		table.diveTable[6].diveRow[0] = new DiveCell(table.diveTable[6].depth, 5, "B", false, 0);
 		table.diveTable[6].diveRow[1] = new DiveCell(table.diveTable[6].depth, 7, "C", false, 0);
@@ -111,23 +104,23 @@ public class BackEnd {
 		table.diveTable[6].diveRow[5] = new DiveCell(table.diveTable[6].depth, 22, "G", false, 0);
 		table.diveTable[6].diveRow[6] = new DiveCell(table.diveTable[6].depth, 25, "H", true, 5);
 		table.diveTable[6].diveRow[7] = new DiveCell(table.diveTable[6].depth, 40, "K", true, 15);
-		
-		table.diveTable[7] = new DiveRow(110, 7);
+
+		table.diveTable[7] = new DiveRow(110, 6);
 		table.diveTable[7].diveRow[0] = new DiveCell(table.diveTable[7].depth, 5, "C", false, 0);
 		table.diveTable[7].diveRow[1] = new DiveCell(table.diveTable[7].depth, 10, "D", false, 0);
 		table.diveTable[7].diveRow[2] = new DiveCell(table.diveTable[7].depth, 13, "E", false, 0);
 		table.diveTable[7].diveRow[3] = new DiveCell(table.diveTable[7].depth, 15, "F", false, 0);
 		table.diveTable[7].diveRow[4] = new DiveCell(table.diveTable[7].depth, 20, "G", true, 5);
 		table.diveTable[7].diveRow[5] = new DiveCell(table.diveTable[7].depth, 30, "J", true, 7);
-		
-		table.diveTable[8] = new DiveRow(120, 7);
+
+		table.diveTable[8] = new DiveRow(120, 6);
 		table.diveTable[8].diveRow[0] = new DiveCell(table.diveTable[8].depth, 5, "C", false, 0);
 		table.diveTable[8].diveRow[1] = new DiveCell(table.diveTable[8].depth, 10, "D", false, 0);
 		table.diveTable[8].diveRow[2] = new DiveCell(table.diveTable[8].depth, 12, "E", false, 0);
 		table.diveTable[8].diveRow[3] = new DiveCell(table.diveTable[8].depth, 15, "F", true, 5);
 		table.diveTable[8].diveRow[4] = new DiveCell(table.diveTable[8].depth, 25, "I", true, 6);
 		table.diveTable[8].diveRow[5] = new DiveCell(table.diveTable[8].depth, 30, "J", true, 14);
-		
+
 		table.diveTable[9] = new DiveRow(130, 4);
 		table.diveTable[9].diveRow[0] = new DiveCell(table.diveTable[9].depth, 5, "C", false, 0);
 		table.diveTable[9].diveRow[1] = new DiveCell(table.diveTable[9].depth, 8, "D", false, 0);
@@ -137,305 +130,89 @@ public class BackEnd {
 	}
 
 	public static String diveCalc(int depth, int time) {
+		// if the depth is above the max depth we can automatically return invalid
+		// depth. this
+		// prevents array out of bounds.
+		// this can be put into main later so that depth is checked automagically
+		if (depth > table.diveTable[table.diveTable.length - 1].depth) {
+			return "Invalid Depth";
+		}
+		// for when user wants the max depth they can dive to for a given time
+		if (depth == 0) {
+			// to keep the while loop running
+			boolean go = true;
+			// index for what dive row
+			int x = 0;
+			// place holder for the length of the dive row, allows us to jump to the max
+			// time at depth.
+			int length;
+			// starts off as invalid because if time is greater then the most shallow depth,
+			// the time is invalid
+			String safety = "Invalid Time";
+			while (go) {
+				// set length to max length
+				length = table.diveTable[x].length - 1;
+				// check if time is beyond max time for x depth
+				if (time > table.diveTable[x].diveRow[length].time) {
+					// checks that the next depth doesn't have the same max time for the depth.
+					if (table.diveTable[x].diveRow[length].stopTime != table.diveTable[x
+							+ 1].diveRow[table.diveTable[x + 1].diveRow.length].time)
+						// return if the next depth isn't the same max time
+						return safety;
+
+				} else {
+					// replace safety with current max depth
+					safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth
+							+ " feet for " + time + " minutes.";
+					// increment to next depth
+					x++;
+					// check that we haven't hit the maximum depth of the table
+					if (x == table.diveTable.length) {
+						//return the current depth if we have hit the max depth
+						return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
+								+ " feet for " + time + " minutes.";
+					}
+
+				}
+			}
+			return safety;
+		}
+
+		/*
+		 * add in time = 0 check to give max time you can dive at depth x.
+		 */
+
+		// if depth is valid we move on.
 		String safety = "";
+		// x checks to see if depth is a multiple of ten while y gets the tens place.
 		int x = depth % 10;
-		int y = 0;
-
+		int y = depth / 10;
+		// if x is not zero this means it is not a multiple of ten and we add one to y
 		if (x != 0) {
-			y = 1;
+			y++;
 		}
-		// Rounds depth to the nearest 10.
-		depth = ((depth / 10) + y) * 10;
-		// if depth is less than 40 assume depth 40 for calculations
-
-		if (depth < 40) {
-			depth = 40;
-		}
-		if (depth == 40) {
-			safety = dive40(depth, time);
-		} else if (depth == 50) {
-			safety = dive50(depth, time);
-		} else if (depth == 60) {
-			safety = dive60(depth, time);
-		} else if (depth == 70) {
-			safety = dive70(depth, time);
-		} else if (depth == 80) {
-			safety = dive80(depth, time);
-		} else if (depth == 90) {
-			safety = dive90(depth, time);
-		} else if (depth == 100) {
-			safety = dive100(depth, time);
-		} else if (depth == 110) {
-			safety = dive110(depth, time);
-		} else if (depth == 120) {
-			safety = dive120(depth, time);
-		} else if (depth == 130) {
-			safety = dive130(depth, time);
-		}
-
-		return safety;
-	}
-
-	public static String dive40(int depth, int time) {
-		String safety = "";
-		if (time > 150) {
+		// we minus 4 to change y into index to get us the right depth row.
+		y = y - 4;
+		// this checks if the time is above the max time or not. if so return invalid
+		// time
+		if (table.diveTable[y].diveRow[table.diveTable[y].diveRow.length - 1].time < time) {
 			return "Invalid Time";
-		} else if (time > 130) {
-			safety = "You need to stop 5 minutes at 15'. You are in group L.";
-		} else if (time > 110) {
-			safety = "You are in group K";
-		} else if (time > 100) {
-			safety = "You are in group J";
-		} else if (time > 80) {
-			safety = "You are in group I";
-		} else if (time > 70) {
-			safety = "You are in group H";
-		} else if (time > 50) {
-			safety = "You are in group G";
-		} else if (time > 40) {
-			safety = "You are in group F";
-		} else if (time > 30) {
-			safety = "You are in group E";
-		} else if (time > 25) {
-			safety = "You are in group D";
-		} else if (time > 15) {
-			safety = "You are in group C";
-		} else if (time > 5) {
-			safety = "You are in group B";
-		} else if (time <= 5) {
-			safety = "You are in group A";
+		}
+		// if time is valid we run through each time interval of the given row.
+		for (int i = 0; i < table.diveTable[y].length; i++) {
+			// we check if time is in the time interval and return the results or continue
+			// on/
+			if (time <= table.diveTable[y].diveRow[i].time) {
+				safety = "You are in group " + table.diveTable[y].diveRow[i].group;
+				if (table.diveTable[y].diveRow[i].safetyStop) {
+					safety = "You need to stop " + table.diveTable[y].diveRow[i].stopTime + " at 15'. " + safety;
+				}
+				// breaks for loop and allows us to skip any further iterations while also
+				// avoiding comparisons with
+				// clearly larger time interval resulting in wrong group/info
+				return safety;
+			}
 		}
 		return safety;
-
 	}
-
-	public static String dive50(int depth, int time) {
-		String safety = "";
-		if (time > 100) {
-			return "Invalid Time";
-		} else if (time > 80) {
-			safety = "You need to stop 5 minutes at 15'. You are in group L.";
-		} else if (time > 70) {
-			safety = "You are in group J";
-		} else if (time > 60) {
-			safety = "You are in group I";
-		} else if (time > 50) {
-			safety = "You are in group H";
-		} else if (time > 40) {
-			safety = "You are in group G";
-		} else if (time > 30) {
-			safety = "You are in group F";
-		} else if (time > 25) {
-			safety = "You are in group E";
-		} else if (time > 15) {
-			safety = "You are in group D";
-		} else if (time > 10) {
-			safety = "You are in group C";
-		} else if (time <= 10) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive60(int depth, int time) {
-		String safety = "";
-		if (time > 80) {
-			return "Invalid Time";
-		} else if (time > 60) {
-			safety = "You need to stop 7 minutes at 15'. You are in group L.";
-		} else if (time > 55) {
-			safety = "You need to stop 5 minutes at 15'. You are in group J.";
-		} else if (time > 50) {
-			safety = "You are in group I";
-		} else if (time > 40) {
-			safety = "You are in group H";
-		} else if (time > 30) {
-			safety = "You are in group G";
-		} else if (time > 25) {
-			safety = "You are in group F";
-		} else if (time > 20) {
-			safety = "You are in group E";
-		} else if (time > 15) {
-			safety = "You are in group D";
-		} else if (time > 10) {
-			safety = "You are in group C";
-		} else if (time <= 10) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive70(int depth, int time) {
-		String safety = "";
-		if (time > 70) {
-			return "Invalid Time";
-		} else if (time > 60) {
-			safety = "You need to stop at 14 minutes at 15'. You are in group L.";
-		} else if (time > 50) {
-			safety = "You need to stop at 8 minutes at 15'. You are in group K.";
-		} else if (time > 45) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group J.";
-		} else if (time > 40) {
-			safety = "You are in group I";
-		} else if (time > 35) {
-			safety = "You are in group H";
-		} else if (time > 30) {
-			safety = "You are in group G";
-		} else if (time > 20) {
-			safety = "You are in group F";
-		} else if (time > 15) {
-			safety = "You are in group E";
-		} else if (time > 10) {
-			safety = "You are in group D";
-		} else if (time > 5) {
-			safety = "You are in group C";
-		} else if (time <= 5) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive80(int depth, int time) {
-		String safety = "";
-		if (time > 60) {
-			return "Invalid Time";
-		} else if (time > 50) {
-			safety = "You need to stop at 17 minutes at 15'. You are in group L.";
-		} else if (time > 40) {
-			safety = "You need to stop at 10 minutes at 15'. You are in group K.";
-		} else if (time > 35) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group I.";
-		} else if (time > 30) {
-			safety = "You are in group H";
-		} else if (time > 25) {
-			safety = "You are in group G";
-		} else if (time > 20) {
-			safety = "You are in group F";
-		} else if (time > 15) {
-			safety = "You are in group E";
-		} else if (time > 10) {
-			safety = "You are in group D";
-		} else if (time > 5) {
-			safety = "You are in group C";
-		} else if (time <= 5) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive90(int depth, int time) {
-		String safety = "";
-		if (time > 50) {
-			return "Invalid Time";
-		} else if (time > 40) {
-			safety = "You need to stop at 18 minutes at 15'. You are in group L.";
-		} else if (time > 30) {
-			safety = "You need to stop at 7 minutes at 15'. You are in group J.";
-		} else if (time > 25) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group H.";
-		} else if (time > 20) {
-			safety = "You are in group G";
-		} else if (time > 15) {
-			safety = "You are in group F";
-		} else if (time > 12) {
-			safety = "You are in group E";
-		} else if (time > 10) {
-			safety = "You are in group D";
-		} else if (time > 5) {
-			safety = "You are in group C";
-		} else if (time <= 5) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive100(int depth, int time) {
-		String safety = "";
-		if (time > 40) {
-			return "Invalid Time";
-		} else if (time > 25) {
-			safety = "You need to stop at 15 minutes at 15'. You are in group K.";
-		} else if (time > 22) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group H.";
-		} else if (time > 20) {
-			safety = "You are in group G.";
-		} else if (time > 15) {
-			safety = "You are in group F";
-		} else if (time > 10) {
-			safety = "You are in group E";
-		} else if (time > 7) {
-			safety = "You are in group D";
-		} else if (time > 5) {
-			safety = "You are in group C.";
-		} else if (time <= 5) {
-			safety = "You are in group B";
-		}
-		return safety;
-
-	}
-
-	public static String dive110(int depth, int time) {
-		String safety = "";
-		if (time > 30) {
-			return "Invalid Time";
-		} else if (time > 20) {
-			safety = "You need to stop at 7 minutes at 15'. You are in group J.";
-		} else if (time > 15) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group G.";
-		} else if (time > 13) {
-			safety = "You are in group F.";
-		} else if (time > 10) {
-			safety = "You are in group E";
-		} else if (time > 5) {
-			safety = "You are in group D.";
-		} else if (time <= 5) {
-			safety = "You are in group C";
-		}
-		return safety;
-
-	}
-
-	public static String dive120(int depth, int time) {
-		String safety = "";
-		if (time > 30) {
-			return "Invalid Time";
-		} else if (time > 25) {
-			safety = "You need to stop at 14 minutes at 15'. You are in group J.";
-		} else if (time > 15) {
-			safety = "You need to stop at 6 minutes at 15'. You are in group I.";
-		} else if (time > 12) {
-			safety = "You need to stop at 5 minutes at 15. You are in group F.";
-		} else if (time > 10) {
-			safety = "You are in group E";
-		} else if (time > 5) {
-			safety = "You are in group D.";
-		} else if (time <= 5) {
-			safety = "You are in group C";
-		}
-		return safety;
-
-	}
-
-	public static String dive130(int depth, int time) {
-		String safety = "";
-		if (time > 25) {
-			return "Invalid Time";
-		} else if (time > 10) {
-			safety = "You need to stop at 10 minutes at 15'. You are in group J.";
-		} else if (time > 8) {
-			safety = "You need to stop at 5 minutes at 15'. You are in group E.";
-		} else if (time > 5) {
-			safety = "You are in group D.";
-		} else if (time <= 5) {
-			safety = "You are in group C.";
-		}
-		return safety;
-
-	}
-
 }
