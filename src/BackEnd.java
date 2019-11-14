@@ -129,6 +129,41 @@ public class BackEnd {
 
 	}
 
+	public static String maxDepthForTime(int time) {
+		// to keep the while loop running
+		boolean go = true;
+		// index for what dive row
+		int x = 0;
+		// place holder for the length of the dive row, allows us to jump to the max
+		// time at depth.
+		int length;
+		// starts off as invalid because if time is greater then the most shallow depth,
+		// the time is invalid
+		String safety = "Invalid Time";
+		while (go) {
+			// set length to max length
+			length = table.diveTable[x].length - 1;
+			// check if time is beyond max time for x depth
+			if (time > table.diveTable[x].diveRow[length].time) {
+				return safety;
+			} else {
+				// replace safety with current max depth
+				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
+						+ time + " minutes.";
+				// increment to next depth
+				x++;
+				// check that we haven't hit the maximum depth of the table
+				if (x == table.diveTable.length) {
+					// return the current depth if we have hit the max depth
+					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
+							+ " feet for " + time + " minutes.";
+				}
+
+			}
+		}
+		return safety;
+	}
+
 	public static String diveCalc(int depth, int time) {
 		// if the depth is above the max depth we can automatically return invalid
 		// depth. this
@@ -137,47 +172,9 @@ public class BackEnd {
 		if (depth > table.diveTable[table.diveTable.length - 1].depth) {
 			return "Invalid Depth";
 		}
-		// for when user wants the max depth they can dive to for a given time
 		if (depth == 0) {
-			// to keep the while loop running
-			boolean go = true;
-			// index for what dive row
-			int x = 0;
-			// place holder for the length of the dive row, allows us to jump to the max
-			// time at depth.
-			int length;
-			// starts off as invalid because if time is greater then the most shallow depth,
-			// the time is invalid
-			String safety = "Invalid Time";
-			while (go) {
-				// set length to max length
-				length = table.diveTable[x].length - 1;
-				// check if time is beyond max time for x depth
-				if (time > table.diveTable[x].diveRow[length].time) {
-					// checks that the next depth doesn't have the same max time for the depth.
-					if (table.diveTable[x].diveRow[length].stopTime != table.diveTable[x
-							+ 1].diveRow[table.diveTable[x + 1].diveRow.length].time)
-						// return if the next depth isn't the same max time
-						return safety;
-
-				} else {
-					// replace safety with current max depth
-					safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth
-							+ " feet for " + time + " minutes.";
-					// increment to next depth
-					x++;
-					// check that we haven't hit the maximum depth of the table
-					if (x == table.diveTable.length) {
-						//return the current depth if we have hit the max depth
-						return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
-								+ " feet for " + time + " minutes.";
-					}
-
-				}
-			}
-			return safety;
+			return maxDepthForTime(time);
 		}
-
 		/*
 		 * add in time = 0 check to give max time you can dive at depth x.
 		 */
