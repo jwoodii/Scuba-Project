@@ -1,4 +1,4 @@
-
+package BackSide;
 public class DiveTable {
 	DiveRow[] diveTable;
 	int length;

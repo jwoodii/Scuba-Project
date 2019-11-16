@@ -1,3 +1,4 @@
+package BackSide;
 import java.util.Scanner;
 
 public class BackEnd {
@@ -12,17 +13,8 @@ public class BackEnd {
 			int depth = scan.nextInt();
 			System.out.println("Please enter in a Time in minutes");
 			int time = scan.nextInt();
-			if (depth == 0) {
-				System.out.println(maxDepthForTime(time));
-			}
-			else if(time == 0) {
-				System.out.println(maxTimeForDepth(depth));
-			}
-			else {
-			System.out.println(diveCalc(depth, time));
-			}
+			System.out.println(sentence(depth,time));
 		}
-
 		scan.close();
 	}
 
@@ -136,7 +128,19 @@ public class BackEnd {
 		table.diveTable[9].diveRow[3] = new DiveCell(table.diveTable[9].depth, 25, "J", true, 10);
 
 	}
-
+	public static String sentence(int depth, int time) {
+		String sentence = "";
+		if (depth == 0) {
+			sentence = maxDepthForTime(time);
+		}
+		else if(time == 0) {
+			sentence = maxTimeForDepth(depth);
+		}
+		else {
+		sentence = diveCalc(depth, time);
+		}
+		return sentence;
+	}
 	public static String maxTimeForDepth(int depth) {
 		String safety = "";
 		for(int i =0; i < table.diveTable.length; i++) {
