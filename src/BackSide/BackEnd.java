@@ -128,8 +128,10 @@ public class BackEnd {
 		table.diveTable[9].diveRow[3] = new DiveCell(table.diveTable[9].depth, 25, "J", true, 10);
 
 	}
+
 	public static String sentence(int depth, int time) {
 		String sentence = "";
+		generateDiveTable();
 		if (depth == 0) {
 			sentence = maxDepthForTime(time);
 		}
@@ -141,20 +143,26 @@ public class BackEnd {
 		}
 		return sentence;
 	}
+	
 	public static String maxTimeForDepth(int depth) {
 		String safety = "";
+		//run through table to find right depth
 		for(int i =0; i < table.diveTable.length; i++) {
+			//check depth
 			if(table.diveTable[i].depth == depth) {
+				//set index to last cell of row
 				int length = table.diveTable[i].length - 1;
+				//check for safety stops, and creates safety stop/ time at 15'
 				if(table.diveTable[i].diveRow[length].safetyStop) {
-					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at " + depth + ". You will need to stop " + table.diveTable[i].diveRow[length].stopTime + " minutes at 15'.";
+					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at " + depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime + " minutes at 15'.";
 				}
-
+				//checks if there a safety stop is needed
 				while (table.diveTable[i].diveRow[length].safetyStop) {
+					//goes one back to till we find a non safety stop time
 					length--;
 				}
-				
-				return "You can dive for " + table.diveTable[i].diveRow[length].time + " minutes without making a safety stop. " + safety; 
+				//appends longest time allowed without safety stop to safety stop time
+				return "You can dive for " + table.diveTable[i].diveRow[length].time + " minutes without making a safety stop.\n" + safety; 
 			}
 		}
 		return safety;
