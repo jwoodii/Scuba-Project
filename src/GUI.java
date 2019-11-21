@@ -45,7 +45,6 @@ public class GUI implements ActionListener {
 		tfa = new JTextArea();
 		sp = new JScrollPane(tfa);
 
-
 		// Adding Components to the frame.
 		frame.getContentPane().add(BorderLayout.NORTH, inst);
 		frame.getContentPane().add(BorderLayout.SOUTH, panel);
