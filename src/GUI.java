@@ -63,10 +63,13 @@ public class GUI implements ActionListener {
 		String sentence = BackEnd.sentence(depth, time);
 		System.out.println(sentence);
 		tfa.append(" " + sentence+ "\n");
+
 		}
 		catch (NumberFormatException ex) {
 		   tfa.append(" Invalid Parameters\n");
 		}
+		tfd.setText(null);
+		tft.setText(null);
 			
 	}
 
