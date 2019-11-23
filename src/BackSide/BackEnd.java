@@ -235,9 +235,9 @@ public class BackEnd {
 			// we check if time is in the time interval and return the results or continue
 			// on/
 			if (time <= table.diveTable[y].diveRow[i].time) {
-				safety = "You are in group " + table.diveTable[y].diveRow[i].group;
+				safety = " You are diving to a depth of " + depth + " feet for " + time + " minutes.\n You are in group " + table.diveTable[y].diveRow[i].group + ".\n";
 				if (table.diveTable[y].diveRow[i].safetyStop) {
-					safety = "You need to stop " + table.diveTable[y].diveRow[i].stopTime + " at 15'. " + safety;
+					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime + " minutes at 15'.\n ";
 				}
 				// breaks for loop and allows us to skip any further iterations while also
 				// avoiding comparisons with
