@@ -57,14 +57,6 @@ public class GUI implements ActionListener {
 		String s1 = tfd.getText();
 		String s2 = tft.getText();
 		try {
-			int depth = Integer.parseInt(s1);
-			int time = Integer.parseInt(s2);
-			String sentence = BackEnd.sentence(depth, time);
-			System.out.println(sentence);
-			tfa.append(" " + sentence + "\n");
-		} catch (NumberFormatException ex) {
-			tfa.append(" Invalid Parameters\n");
-		}
 		int depth = Integer.parseInt(s1);
 		int time = Integer.parseInt(s2);
 		String sentence = BackEnd.sentence(depth, time);
