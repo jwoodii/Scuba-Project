@@ -40,11 +40,10 @@ public class GUI implements ActionListener {
 		panel.add(tft);
 		panel.add(Enter);
 		Enter.addActionListener(this);
-		
+
 		// Text Area at the Center
 		tfa = new JTextArea();
 		sp = new JScrollPane(tfa);
-
 
 		// Adding Components to the frame.
 		frame.getContentPane().add(BorderLayout.NORTH, inst);
@@ -58,16 +57,14 @@ public class GUI implements ActionListener {
 		String s1 = tfd.getText();
 		String s2 = tft.getText();
 		try {
-		int depth = Integer.parseInt(s1);
-		int time = Integer.parseInt(s2);
-		String sentence = BackEnd.sentence(depth, time);
-		System.out.println(sentence);
-		tfa.append(" " + sentence+ "\n");
+			int depth = Integer.parseInt(s1);
+			int time = Integer.parseInt(s2);
+			String sentence = BackEnd.sentence(depth, time);
+			System.out.println(sentence);
+			tfa.append(" " + sentence + "\n");
+		} catch (NumberFormatException ex) {
+			tfa.append(" Invalid Parameters\n");
 		}
-		catch (NumberFormatException ex) {
-		   tfa.append(" Invalid Parameters\n");
-		}
-			
 	}
 
 	public static void main(String args[]) {
