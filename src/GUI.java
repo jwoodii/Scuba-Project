@@ -65,6 +65,18 @@ public class GUI implements ActionListener {
 		} catch (NumberFormatException ex) {
 			tfa.append(" Invalid Parameters\n");
 		}
+		int depth = Integer.parseInt(s1);
+		int time = Integer.parseInt(s2);
+		String sentence = BackEnd.sentence(depth, time);
+		System.out.println(sentence);
+		tfa.append(" " + sentence+ "\n");
+
+		}
+		catch (NumberFormatException ex) {
+		   tfa.append(" Invalid Parameters\n");
+		}
+		tfd.setText(null);
+		tft.setText(null);
 	}
 
 	public static void main(String args[]) {
