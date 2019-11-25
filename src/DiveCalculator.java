@@ -1,21 +1,71 @@
-package BackSide;
-import java.util.Scanner;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class BackEnd {
+public class DiveCalculator implements ActionListener {
+	JTextField tfd, tft, tfih, tfim;
+	JTextArea tfa;
+	JScrollPane sp;
 	public static DiveTable table = new DiveTable(10);
 
 	public static void main(String[] args) {
-		boolean x = true;
-		Scanner scan = new Scanner(System.in);
-		generateDiveTable();
-		while (x) {
-			System.out.println("Please enter in a Depth in feet");
-			int depth = scan.nextInt();
-			System.out.println("Please enter in a Time in minutes");
-			int time = scan.nextInt();
-			System.out.println(sentence(depth,time));
-		}
-		scan.close();
+		new DiveCalculator();
+	}
+
+	public DiveCalculator() {
+		// Creating the Frame
+		JFrame frame = new JFrame("Dive Calculator");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(1000, 600);
+
+		// creating the panel at bottom and adding instructions
+		JPanel inst = new JPanel();
+		JLabel instruct = new JLabel("Enter in a Depth and time to check for group letter.");
+		JLabel instruct2 = new JLabel(
+				"Use a zero in either depth or time to be given the maximum Depth/Time for given value.");
+		inst.add(instruct);
+		inst.add(instruct2);
+
+		// Creating the panel at bottom and adding components
+		JPanel panel = new JPanel(); // the panel is not visible in output
+		JLabel Depth = new JLabel("Enter Depth");
+		JLabel Time = new JLabel("Enter Time");
+		JLabel IntervalH = new JLabel("Enter Hour Interval");
+		JLabel IntervalM = new JLabel("Enter Minute Interval");
+		tfd = new JTextField(10); // accepts up to 10 characters
+		tft = new JTextField(10);
+		tfih = new JTextField(10);
+		tfim = new JTextField(10);
+		JButton Enter = new JButton("Enter");
+
+		panel.add(Depth); // Components Added using Flow Layout
+		panel.add(tfd);
+		panel.add(Time);
+		panel.add(tft);
+		panel.add(IntervalH);
+		panel.add(tfih);
+		panel.add(IntervalM);
+		panel.add(tfim);
+		panel.add(Enter);
+		tfim.setEditable(false);
+		tfih.setEditable(false);
+		Enter.addActionListener(this);
+
+		// Text Area at the Center
+		tfa = new JTextArea();
+		sp = new JScrollPane(tfa);
+
+		// Adding Components to the frame.
+		frame.getContentPane().add(BorderLayout.NORTH, inst);
+		frame.getContentPane().add(BorderLayout.SOUTH, panel);
+		frame.getContentPane().add(BorderLayout.CENTER, sp);
+		frame.setVisible(true);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
 	}
 
 	// dive table based on NAUI Dive table. built as array to allow for easy change.
@@ -134,35 +184,36 @@ public class BackEnd {
 		generateDiveTable();
 		if (depth == 0) {
 			sentence = maxDepthForTime(time);
-		}
-		else if(time == 0) {
+		} else if (time == 0) {
 			sentence = maxTimeForDepth(depth);
-		}
-		else {
-		sentence = diveCalc(depth, time);
+		} else {
+			sentence = diveCalc(depth, time);
 		}
 		return sentence;
 	}
-	
+
 	public static String maxTimeForDepth(int depth) {
 		String safety = "";
-		//run through table to find right depth
-		for(int i =0; i < table.diveTable.length; i++) {
-			//check depth
-			if(table.diveTable[i].depth == depth) {
-				//set index to last cell of row
+		// run through table to find right depth
+		for (int i = 0; i < table.diveTable.length; i++) {
+			// check depth
+			if (table.diveTable[i].depth == depth) {
+				// set index to last cell of row
 				int length = table.diveTable[i].length - 1;
-				//check for safety stops, and creates safety stop/ time at 15'
-				if(table.diveTable[i].diveRow[length].safetyStop) {
-					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at " + depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime + " minutes at 15'.";
+				// check for safety stops, and creates safety stop/ time at 15'
+				if (table.diveTable[i].diveRow[length].safetyStop) {
+					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at "
+							+ depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
+							+ " minutes at 15'.";
 				}
-				//checks if there a safety stop is needed
+				// checks if there a safety stop is needed
 				while (table.diveTable[i].diveRow[length].safetyStop) {
-					//goes one back to till we find a non safety stop time
+					// goes one back to till we find a non safety stop time
 					length--;
 				}
-				//appends longest time allowed without safety stop to safety stop time
-				return "You can dive for " + table.diveTable[i].diveRow[length].time + " minutes without making a safety stop.\n" + safety; 
+				// appends longest time allowed without safety stop to safety stop time
+				return "You can dive for " + table.diveTable[i].diveRow[length].time
+						+ " minutes without making a safety stop.\n" + safety;
 			}
 		}
 		return safety;
@@ -235,9 +286,11 @@ public class BackEnd {
 			// we check if time is in the time interval and return the results or continue
 			// on/
 			if (time <= table.diveTable[y].diveRow[i].time) {
-				safety = " You are diving to a depth of " + depth + " feet for " + time + " minutes.\n You are in group " + table.diveTable[y].diveRow[i].group + ".\n";
+				safety = " You are diving to a depth of " + depth + " feet for " + time
+						+ " minutes.\n You are in group " + table.diveTable[y].diveRow[i].group + ".\n";
 				if (table.diveTable[y].diveRow[i].safetyStop) {
-					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime + " minutes at 15'.\n ";
+					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime
+							+ " minutes at 15'.\n ";
 				}
 				// breaks for loop and allows us to skip any further iterations while also
 				// avoiding comparisons with

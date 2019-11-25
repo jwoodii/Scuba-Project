@@ -1,4 +1,4 @@
-package BackSide;
+
 public class DiveRow {
 	int depth;
 	DiveCell[] diveRow;
