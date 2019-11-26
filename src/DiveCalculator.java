@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.NumberFormat;
 
 public class DiveCalculator implements ActionListener {
 	JTextField tfd, tft, tfih, tfim;
@@ -11,8 +10,11 @@ public class DiveCalculator implements ActionListener {
 	boolean repeatDive = false;
 	int counter = 0;
 	String Group = null;
+	int RNT = 0;
 
 	public static DiveTable table = new DiveTable(10);
+	public static SITTable sitTable = new SITTable(12);
+	
 
 	public static void main(String[] args) {
 		new DiveCalculator();
@@ -99,6 +101,22 @@ public class DiveCalculator implements ActionListener {
 				repeatDive = true;
 				tfih.setEditable(true);
 				tfim.setEditable(true);
+			}
+		//Start repeat dive calcs
+		} else {
+			String s1 = tfd.getText();
+			String s2 = tft.getText();
+			String s3 = tfih.getText();
+			String s4 = tfim.getText();
+			int depth = 0, time = 0, intervalHours = 0, intervalMinutes = 0;
+			// double check in case of non-integer inputs
+			try {
+				depth = Integer.parseInt(s1);
+				time = Integer.parseInt(s2);
+				intervalHours = Integer.parseInt(s3);
+				intervalMinutes = Integer.parseInt(s4);
+			} catch (NumberFormatException ex) {
+				tfa.append("Invalid Parameter");
 			}
 		}
 
@@ -218,18 +236,84 @@ public class DiveCalculator implements ActionListener {
 		table.diveTable[9].diveRow[3] = new DiveCell(table.diveTable[9].depth, 25, "J", true, 10);
 
 	}
-
+	public static void generateSITTable() {
+		
+	}
+	public static void generateRepeatDiveTable() {
+		
+	}
 	public String sentence(int depth, int time) {
 		String sentence = "";
 		generateDiveTable();
 		if (depth == 0) {
-			sentence = maxDepthForTime(time);
+			sentence = maxDepthForTimeRD(time);
 		} else if (time == 0) {
-			sentence = maxTimeForDepth(depth);
+			sentence = maxTimeForDepthRD(depth);
 		} else {
 			sentence = diveCalc(depth, time);
 		}
 		return sentence;
+	}
+	public static String maxTimeForDepthRD(int depth) {
+		String safety = "";
+		// run through table to find right depth
+		for (int i = 0; i < table.diveTable.length; i++) {
+			// check depth
+			if (table.diveTable[i].depth == depth) {
+				// set index to last cell of row
+				int length = table.diveTable[i].length - 1;
+				// check for safety stops, and creates safety stop/ time at 15'
+				if (table.diveTable[i].diveRow[length].safetyStop) {
+					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at "
+							+ depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
+							+ " minutes at 15'.";
+				}
+				// checks if there a safety stop is needed
+				while (table.diveTable[i].diveRow[length].safetyStop) {
+					// goes one back to till we find a non safety stop time
+					length--;
+				}
+				// appends longest time allowed without safety stop to safety stop time
+				return "You can dive for " + table.diveTable[i].diveRow[length].time
+						+ " minutes without making a safety stop.\n" + safety;
+			}
+		}
+		return safety;
+	}
+	
+	public static String maxDepthForTimeRD(int time) {
+		// to keep the while loop running
+		boolean go = true;
+		// index for what dive row
+		int x = 0;
+		// place holder for the length of the dive row, allows us to jump to the max
+		// time at depth.
+		int length;
+		// starts off as invalid because if time is greater then the most shallow depth,
+		// the time is invalid
+		String safety = "Invalid Time";
+		while (go) {
+			// set length to max length
+			length = table.diveTable[x].length - 1;
+			// check if time is beyond max time for x depth
+			if (time > table.diveTable[x].diveRow[length].time) {
+				return safety;
+			} else {
+				// replace safety with current max depth
+				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
+						+ time + " minutes.";
+				// increment to next depth
+				x++;
+				// check that we haven't hit the maximum depth of the table
+				if (x == table.diveTable.length) {
+					// return the current depth if we have hit the max depth
+					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
+							+ " feet for " + time + " minutes.";
+				}
+
+			}
+		}
+		return safety;
 	}
 
 	public static String maxTimeForDepth(int depth) {
