@@ -2,11 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 public class DiveCalculator implements ActionListener {
 	JTextField tfd, tft, tfih, tfim;
 	JTextArea tfa;
 	JScrollPane sp;
+	boolean repeatDive = false;
+	int counter = 0;
+	String Group = null;
+
 	public static DiveTable table = new DiveTable(10);
 
 	public static void main(String[] args) {
@@ -19,7 +24,7 @@ public class DiveCalculator implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 600);
 
-		// creating the panel at bottom and adding instructions
+		// creating the panel at top and adding instructions
 		JPanel inst = new JPanel();
 		JLabel instruct = new JLabel("Enter in a Depth and time to check for group letter.");
 		JLabel instruct2 = new JLabel(
@@ -61,11 +66,46 @@ public class DiveCalculator implements ActionListener {
 		frame.getContentPane().add(BorderLayout.SOUTH, panel);
 		frame.getContentPane().add(BorderLayout.CENTER, sp);
 		frame.setVisible(true);
+
+		// generate the dive table
+		generateDiveTable();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+		// if it is not a repeat dive
+		if (!repeatDive) {
+			// get time and depth
+			String s1 = tfd.getText();
+			String s2 = tft.getText();
+			int depth = 0, time = 0;
+			// double check in case of non-integer inputs
+			try {
+				depth = Integer.parseInt(s1);
+				time = Integer.parseInt(s2);
+			} catch (NumberFormatException ex) {
+				tfa.append("Invalid Parameter");
+			}
+			// check if its an actual dive or just checking what can be done
+			if (depth == 0 || time == 0) {
+				if (depth == 0) {
+					tfa.append(maxDepthForTime(time) + "\n");
+				} else if (time == 0) {
+					tfa.append(maxTimeForDepth(depth) + "\n");
+				}
+			} else {
+				tfa.append(diveCalc(depth, time) + "\n");
+				counter++;
+				repeatDive = true;
+				tfih.setEditable(true);
+				tfim.setEditable(true);
+			}
+		}
+
+		tfd.setText(null);
+		tft.setText(null);
+		tfih.setText(null);
+		tfim.setText(null);
 	}
 
 	// dive table based on NAUI Dive table. built as array to allow for easy change.
@@ -179,7 +219,7 @@ public class DiveCalculator implements ActionListener {
 
 	}
 
-	public static String sentence(int depth, int time) {
+	public String sentence(int depth, int time) {
 		String sentence = "";
 		generateDiveTable();
 		if (depth == 0) {
@@ -257,7 +297,7 @@ public class DiveCalculator implements ActionListener {
 	/*
 	 * we have verified that both time and depth are non zero integer at this point.
 	 */
-	public static String diveCalc(int depth, int time) {
+	public String diveCalc(int depth, int time) {
 		// if the depth is above the max depth we can automatically return invalid
 		// depth. this
 		// prevents array out of bounds.
@@ -288,13 +328,11 @@ public class DiveCalculator implements ActionListener {
 			if (time <= table.diveTable[y].diveRow[i].time) {
 				safety = " You are diving to a depth of " + depth + " feet for " + time
 						+ " minutes.\n You are in group " + table.diveTable[y].diveRow[i].group + ".\n";
+				Group = table.diveTable[y].diveRow[i].group;
 				if (table.diveTable[y].diveRow[i].safetyStop) {
 					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime
 							+ " minutes at 15'.\n ";
 				}
-				// breaks for loop and allows us to skip any further iterations while also
-				// avoiding comparisons with
-				// clearly larger time interval resulting in wrong group/info
 				return safety;
 			}
 		}
