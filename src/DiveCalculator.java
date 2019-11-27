@@ -11,6 +11,8 @@ public class DiveCalculator implements ActionListener {
 	int counter = 0;
 	String Group = null;
 	int RNT = 0;
+	static final int maxSurfaceTime = 1440;
+	static final int minSurfaceTime = 10;
 
 	public static DiveTable table = new DiveTable(10);
 	public static SITTable sitTable = new SITTable(12);
@@ -88,7 +90,7 @@ public class DiveCalculator implements ActionListener {
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
 			} catch (NumberFormatException ex) {
-				tfa.append("Invalid Parameter");
+				tfa.append("Invalid Parameter\n");
 			}
 			// check if its an actual dive or just checking what can be done
 			if (depth == 0 || time == 0) {
@@ -118,7 +120,7 @@ public class DiveCalculator implements ActionListener {
 				intervalHours = Integer.parseInt(s3);
 				intervalMinutes = Integer.parseInt(s4);
 			} catch (NumberFormatException ex) {
-				tfa.append("Invalid Parameter");
+				tfa.append("Invalid Parameter\n");
 			}
 		}
 
@@ -423,9 +425,35 @@ public class DiveCalculator implements ActionListener {
 	}
 
 	public static void generateSITTable() {
+		sitTable.sitTable[0] = new SITColumn("A", 1);
+		sitTable.sitTable[0].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
+		sitTable.sitTable[1] = new SITColumn("A", 2);
+		sitTable.sitTable[1].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
+		sitTable.sitTable[1].SITColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
+		sitTable.sitTable[2] = new SITColumn("A", 3);
+		sitTable.sitTable[2].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
+		sitTable.sitTable[2].SITColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
+		sitTable.sitTable[2].SITColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "c");
+		sitTable.sitTable[3] = new SITColumn("A", 4);
 
+		sitTable.sitTable[4] = new SITColumn("A", 5);
+
+		sitTable.sitTable[5] = new SITColumn("A", 6);
+
+		sitTable.sitTable[6] = new SITColumn("A", 7);
+
+		sitTable.sitTable[7] = new SITColumn("A", 8);
+
+		sitTable.sitTable[8] = new SITColumn("A", 9);
+
+		sitTable.sitTable[9] = new SITColumn("A", 10);
+
+		sitTable.sitTable[10] = new SITColumn("A", 11);
+
+		sitTable.sitTable[11] = new SITColumn("A", 12);
 	}
+
 	public static void generateRepeatTable() {
-		
+
 	}
 }
