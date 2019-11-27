@@ -427,30 +427,30 @@ public class DiveCalculator implements ActionListener {
 	public static void generateSITTable() {
 		sitTable.sitTable[0] = new SITColumn("A", 1);
 		sitTable.sitTable[0].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
-		sitTable.sitTable[1] = new SITColumn("A", 2);
+		sitTable.sitTable[1] = new SITColumn("B", 2);
 		sitTable.sitTable[1].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
 		sitTable.sitTable[1].SITColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
-		sitTable.sitTable[2] = new SITColumn("A", 3);
+		sitTable.sitTable[2] = new SITColumn("C", 3);
 		sitTable.sitTable[2].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
 		sitTable.sitTable[2].SITColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
 		sitTable.sitTable[2].SITColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "c");
-		sitTable.sitTable[3] = new SITColumn("A", 4);
+		sitTable.sitTable[3] = new SITColumn("D", 4);
 
-		sitTable.sitTable[4] = new SITColumn("A", 5);
+		sitTable.sitTable[4] = new SITColumn("E", 5);
 
-		sitTable.sitTable[5] = new SITColumn("A", 6);
+		sitTable.sitTable[5] = new SITColumn("F", 6);
 
-		sitTable.sitTable[6] = new SITColumn("A", 7);
+		sitTable.sitTable[6] = new SITColumn("G", 7);
 
-		sitTable.sitTable[7] = new SITColumn("A", 8);
+		sitTable.sitTable[7] = new SITColumn("H", 8);
 
-		sitTable.sitTable[8] = new SITColumn("A", 9);
+		sitTable.sitTable[8] = new SITColumn("I", 9);
 
-		sitTable.sitTable[9] = new SITColumn("A", 10);
+		sitTable.sitTable[9] = new SITColumn("J", 10);
 
-		sitTable.sitTable[10] = new SITColumn("A", 11);
+		sitTable.sitTable[10] = new SITColumn("K", 11);
 
-		sitTable.sitTable[11] = new SITColumn("A", 12);
+		sitTable.sitTable[11] = new SITColumn("L", 12);
 	}
 
 	public static void generateRepeatTable() {
