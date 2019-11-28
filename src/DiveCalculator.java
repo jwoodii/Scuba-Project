@@ -78,6 +78,9 @@ public class DiveCalculator implements ActionListener {
 	}
 
 	@Override
+	/*
+	 * CHECK IF DEPTH IS > 130 or < 0
+	 */
 	public void actionPerformed(ActionEvent e) {
 		// if it is not a repeat dive
 		if (!repeatDive) {
@@ -132,80 +135,115 @@ public class DiveCalculator implements ActionListener {
 
 	// dive table based on NAUI Dive table. built as array to allow for easy change.
 	// builds dive table
-	public String sentence(int depth, int time) {
-		String sentence = "";
-		generateDiveTable();
-		if (depth == 0) {
-			sentence = maxDepthForTimeRD(time);
-		} else if (time == 0) {
-			sentence = maxTimeForDepthRD(depth);
-		} else {
-			sentence = diveCalc(depth, time);
+//	public String sentence(int depth, int time) {
+//		String sentence = "";
+//		if (depth == 0) {
+//			sentence = maxDepthForTimeRD(time);
+//		} else if (time == 0) {
+//			sentence = maxTimeForDepthRD(depth);
+//		} else {
+//			sentence = diveCalc(depth, time);
+//		}
+//		return sentence;
+//	}
+	public static String newGroup(String initGroup, int minutes) {
+		if (minutes > maxSurfaceTime) {
+			return "A";
 		}
-		return sentence;
-	}
-
-	public static String maxTimeForDepthRD(int depth) {
-		String safety = "";
-		// run through table to find right depth
-		for (int i = 0; i < table.diveTable.length; i++) {
-			// check depth
-			if (table.diveTable[i].depth == depth) {
-				// set index to last cell of row
-				int length = table.diveTable[i].length - 1;
-				// check for safety stops, and creates safety stop/ time at 15'
-				if (table.diveTable[i].diveRow[length].safetyStop) {
-					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at "
-							+ depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
-							+ " minutes at 15'.";
+		if (minutes < minSurfaceTime) {
+			return null;
+		}
+		// First find the column with the init group
+		for (int i = 0; i < sitTable.length; i++) {
+			if (sitTable.sitTable[i].initialGroup == initGroup) {
+				for (int j = 0; j < sitTable.sitTable[i].length; j++) {
+					if (minutes > sitTable.sitTable[i].sitColumn[j].surfaceIntervalTime) {
+						return sitTable.sitTable[i].sitColumn[j - 1].EndGroup;
+					}
 				}
-				// checks if there a safety stop is needed
-				while (table.diveTable[i].diveRow[length].safetyStop) {
-					// goes one back to till we find a non safety stop time
-					length--;
-				}
-				// appends longest time allowed without safety stop to safety stop time
-				return "You can dive for " + table.diveTable[i].diveRow[length].time
-						+ " minutes without making a safety stop.\n" + safety;
 			}
 		}
-		return safety;
+		return null;
 	}
 
-	public static String maxDepthForTimeRD(int time) {
-		// to keep the while loop running
-		boolean go = true;
-		// index for what dive row
-		int x = 0;
-		// place holder for the length of the dive row, allows us to jump to the max
-		// time at depth.
-		int length;
-		// starts off as invalid because if time is greater then the most shallow depth,
-		// the time is invalid
-		String safety = "Invalid Time";
-		while (go) {
-			// set length to max length
-			length = table.diveTable[x].length - 1;
-			// check if time is beyond max time for x depth
-			if (time > table.diveTable[x].diveRow[length].time) {
-				return safety;
-			} else {
-				// replace safety with current max depth
-				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
-						+ time + " minutes.";
-				// increment to next depth
-				x++;
-				// check that we haven't hit the maximum depth of the table
-				if (x == table.diveTable.length) {
-					// return the current depth if we have hit the max depth
-					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
-							+ " feet for " + time + " minutes.";
+	public static int newRNT(String group, int depth) {
+		for (int i = 0; i < rpTable.repeatDiveTable.length; i++) {
+			if (rpTable.repeatDiveTable[i].group == group) {
+				int ones = depth / 10;
+				int newDepth = depth;
+				if(ones != 0) {
+					newDepth = (((depth % 10) + 1) * 10);
 				}
-
+				for (int j = 0; j < rpTable.repeatDiveTable[i].length; j++) {
+					if(rpTable.repeatDiveTable[i].repeatDiveRow[j].depth == newDepth) {
+						return rpTable.repeatDiveTable[i].repeatDiveRow[j].RNT;
+					}
+				}
 			}
 		}
-		return safety;
+		return 0;
 	}
+//	public static String maxTimeForDepthRD(int depth) {
+//		String safety = "";
+//		// run through table to find right depth
+//		for (int i = 0; i < table.diveTable.length; i++) {
+//			// check depth
+//			if (table.diveTable[i].depth == depth) {
+//				// set index to last cell of row
+//				int length = table.diveTable[i].length - 1;
+//				// check for safety stops, and creates safety stop/ time at 15'
+//				if (table.diveTable[i].diveRow[length].safetyStop) {
+//					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at "
+//							+ depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
+//							+ " minutes at 15'.";
+//				}
+//				// checks if there a safety stop is needed
+//				while (table.diveTable[i].diveRow[length].safetyStop) {
+//					// goes one back to till we find a non safety stop time
+//					length--;
+//				}
+//				// appends longest time allowed without safety stop to safety stop time
+//				return "You can dive for " + table.diveTable[i].diveRow[length].time
+//						+ " minutes without making a safety stop.\n" + safety;
+//			}
+//		}
+//		return safety;
+//	}
+//
+//	public static String maxDepthForTimeRD(int time) {
+//		// to keep the while loop running
+//		boolean go = true;
+//		// index for what dive row
+//		int x = 0;
+//		// place holder for the length of the dive row, allows us to jump to the max
+//		// time at depth.
+//		int length;
+//		// starts off as invalid because if time is greater then the most shallow depth,
+//		// the time is invalid
+//		String safety = "Invalid Time";
+//		while (go) {
+//			// set length to max length
+//			length = table.diveTable[x].length - 1;
+//			// check if time is beyond max time for x depth
+//			if (time > table.diveTable[x].diveRow[length].time) {
+//				return safety;
+//			} else {
+//				// replace safety with current max depth
+//				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
+//						+ time + " minutes.";
+//				// increment to next depth
+//				x++;
+//				// check that we haven't hit the maximum depth of the table
+//				if (x == table.diveTable.length) {
+//					// return the current depth if we have hit the max depth
+//					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
+//							+ " feet for " + time + " minutes.";
+//				}
+//
+//			}
+//		}
+//		return safety;
+//	}
 
 	public static String maxTimeForDepth(int depth) {
 		String safety = "";
@@ -426,63 +464,62 @@ public class DiveCalculator implements ActionListener {
 
 	public static void generateSITTable() {
 		sitTable.sitTable[0] = new SITColumn("A", 1);
-		sitTable.sitTable[0].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
+		sitTable.sitTable[0].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
 		sitTable.sitTable[1] = new SITColumn("B", 2);
-		sitTable.sitTable[1].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
-		sitTable.sitTable[1].SITColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
+		sitTable.sitTable[1].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
+		sitTable.sitTable[1].sitColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
 		sitTable.sitTable[2] = new SITColumn("C", 3);
-		sitTable.sitTable[2].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
-		sitTable.sitTable[2].SITColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
-		sitTable.sitTable[2].SITColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
+		sitTable.sitTable[2].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
+		sitTable.sitTable[2].sitColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
+		sitTable.sitTable[2].sitColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
 		sitTable.sitTable[3] = new SITColumn("D", 4);
-		
+
 		sitTable.sitTable[4] = new SITColumn("E", 5);
-		sitTable.sitTable[4].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup,"A");
-		sitTable.sitTable[4].SITColumn[1] = new SITCell(394, sitTable.sitTable[4].initialGroup, "B");
-		sitTable.sitTable[4].SITColumn[2] = new SITCell(204, sitTable.sitTable[4].initialGroup, "C");
-		sitTable.sitTable[4].SITColumn[3] = new SITCell(117, sitTable.sitTable[4].initialGroup, "D");
-		sitTable.sitTable[4].SITColumn[4] = new SITCell(54, sitTable.sitTable[4].initialGroup, "E");
-		
+		sitTable.sitTable[4].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup, "A");
+		sitTable.sitTable[4].sitColumn[1] = new SITCell(394, sitTable.sitTable[4].initialGroup, "B");
+		sitTable.sitTable[4].sitColumn[2] = new SITCell(204, sitTable.sitTable[4].initialGroup, "C");
+		sitTable.sitTable[4].sitColumn[3] = new SITCell(117, sitTable.sitTable[4].initialGroup, "D");
+		sitTable.sitTable[4].sitColumn[4] = new SITCell(54, sitTable.sitTable[4].initialGroup, "E");
+
 		sitTable.sitTable[5] = new SITColumn("F", 6);
-		
 
 		sitTable.sitTable[6] = new SITColumn("G", 7);
-		sitTable.sitTable[6].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[6].initialGroup,"A");
-    sitTable.sitTable[6].SITColumn[1] = new SITCell(455, sitTable.sitTable[6].initialGroup, "B");
-    sitTable.sitTable[6].SITColumn[2] = new SITCell(265, sitTable.sitTable[6].initialGroup, "C");
-    sitTable.sitTable[6].SITColumn[3] = new SITCell(178, sitTable.sitTable[6].initialGroup, "D");
-    sitTable.sitTable[6].SITColumn[4] = new SITCell(119, sitTable.sitTable[6].initialGroup, "E");
-    sitTable.sitTable[6].SITColumn[5] = new SITCell(75, sitTable.sitTable[6].initialGroup, "F");
-    sitTable.sitTable[6].SITColumn[6] = new SITCell(40, sitTable.sitTable[6].initialGroup, "G");
-    
+		sitTable.sitTable[6].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[6].initialGroup, "A");
+		sitTable.sitTable[6].sitColumn[1] = new SITCell(455, sitTable.sitTable[6].initialGroup, "B");
+		sitTable.sitTable[6].sitColumn[2] = new SITCell(265, sitTable.sitTable[6].initialGroup, "C");
+		sitTable.sitTable[6].sitColumn[3] = new SITCell(178, sitTable.sitTable[6].initialGroup, "D");
+		sitTable.sitTable[6].sitColumn[4] = new SITCell(119, sitTable.sitTable[6].initialGroup, "E");
+		sitTable.sitTable[6].sitColumn[5] = new SITCell(75, sitTable.sitTable[6].initialGroup, "F");
+		sitTable.sitTable[6].sitColumn[6] = new SITCell(40, sitTable.sitTable[6].initialGroup, "G");
+
 		sitTable.sitTable[7] = new SITColumn("H", 8);
-		
+
 		sitTable.sitTable[8] = new SITColumn("I", 9);
-		sitTable.sitTable[8].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[8].initialGroup,"A");
-    sitTable.sitTable[8].SITColumn[1] = new SITCell(501, sitTable.sitTable[8].initialGroup, "B");
-    sitTable.sitTable[8].SITColumn[2] = new SITCell(321, sitTable.sitTable[8].initialGroup, "C");
-    sitTable.sitTable[8].SITColumn[3] = new SITCell(223, sitTable.sitTable[8].initialGroup, "D");
-    sitTable.sitTable[8].SITColumn[4] = new SITCell(164, sitTable.sitTable[8].initialGroup, "E");
-    sitTable.sitTable[8].SITColumn[5] = new SITCell(122, sitTable.sitTable[8].initialGroup, "F");
-    sitTable.sitTable[8].SITColumn[6] = new SITCell(89, sitTable.sitTable[8].initialGroup, "G");
-    sitTable.sitTable[8].SITColumn[7] = new SITCell(59, sitTable.sitTable[8].initialGroup, "H");
-    sitTable.sitTable[8].SITColumn[8] = new SITCell(33, sitTable.sitTable[8].initialGroup, "I");
-    
+		sitTable.sitTable[8].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[8].initialGroup, "A");
+		sitTable.sitTable[8].sitColumn[1] = new SITCell(501, sitTable.sitTable[8].initialGroup, "B");
+		sitTable.sitTable[8].sitColumn[2] = new SITCell(321, sitTable.sitTable[8].initialGroup, "C");
+		sitTable.sitTable[8].sitColumn[3] = new SITCell(223, sitTable.sitTable[8].initialGroup, "D");
+		sitTable.sitTable[8].sitColumn[4] = new SITCell(164, sitTable.sitTable[8].initialGroup, "E");
+		sitTable.sitTable[8].sitColumn[5] = new SITCell(122, sitTable.sitTable[8].initialGroup, "F");
+		sitTable.sitTable[8].sitColumn[6] = new SITCell(89, sitTable.sitTable[8].initialGroup, "G");
+		sitTable.sitTable[8].sitColumn[7] = new SITCell(59, sitTable.sitTable[8].initialGroup, "H");
+		sitTable.sitTable[8].sitColumn[8] = new SITCell(33, sitTable.sitTable[8].initialGroup, "I");
+
 		sitTable.sitTable[9] = new SITColumn("J", 10);
 
 		sitTable.sitTable[10] = new SITColumn("K", 11);
-		sitTable.sitTable[10].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[10].initialGroup,"A");
-		sitTable.sitTable[10].SITColumn[1] = new SITCell(538, sitTable.sitTable[10].initialGroup, "B");
-		sitTable.sitTable[10].SITColumn[2] = new SITCell(348, sitTable.sitTable[10].initialGroup, "C");
-		sitTable.sitTable[10].SITColumn[3] = new SITCell(259, sitTable.sitTable[10].initialGroup, "D");
-		sitTable.sitTable[10].SITColumn[4] = new SITCell(201, sitTable.sitTable[10].initialGroup, "E");
-		sitTable.sitTable[10].SITColumn[5] = new SITCell(158, sitTable.sitTable[10].initialGroup, "F");
-		sitTable.sitTable[10].SITColumn[6] = new SITCell(123, sitTable.sitTable[10].initialGroup, "G");
-		sitTable.sitTable[10].SITColumn[7] = new SITCell(95, sitTable.sitTable[10].initialGroup, "H");
-		sitTable.sitTable[10].SITColumn[8] = new SITCell(71, sitTable.sitTable[10].initialGroup, "I");
-		sitTable.sitTable[10].SITColumn[9] = new SITCell(49, sitTable.sitTable[10].initialGroup, "J");
-		sitTable.sitTable[10].SITColumn[10] = new SITCell(28, sitTable.sitTable[10].initialGroup, "K");
-		
+		sitTable.sitTable[10].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[10].initialGroup, "A");
+		sitTable.sitTable[10].sitColumn[1] = new SITCell(538, sitTable.sitTable[10].initialGroup, "B");
+		sitTable.sitTable[10].sitColumn[2] = new SITCell(348, sitTable.sitTable[10].initialGroup, "C");
+		sitTable.sitTable[10].sitColumn[3] = new SITCell(259, sitTable.sitTable[10].initialGroup, "D");
+		sitTable.sitTable[10].sitColumn[4] = new SITCell(201, sitTable.sitTable[10].initialGroup, "E");
+		sitTable.sitTable[10].sitColumn[5] = new SITCell(158, sitTable.sitTable[10].initialGroup, "F");
+		sitTable.sitTable[10].sitColumn[6] = new SITCell(123, sitTable.sitTable[10].initialGroup, "G");
+		sitTable.sitTable[10].sitColumn[7] = new SITCell(95, sitTable.sitTable[10].initialGroup, "H");
+		sitTable.sitTable[10].sitColumn[8] = new SITCell(71, sitTable.sitTable[10].initialGroup, "I");
+		sitTable.sitTable[10].sitColumn[9] = new SITCell(49, sitTable.sitTable[10].initialGroup, "J");
+		sitTable.sitTable[10].sitColumn[10] = new SITCell(28, sitTable.sitTable[10].initialGroup, "K");
+
 		sitTable.sitTable[11] = new SITColumn("L", 12);
 	}
 

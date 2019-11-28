@@ -1,12 +1,12 @@
 
 public class SITColumn {
 	String initialGroup;
-	SITCell[] SITColumn;
+	SITCell[] sitColumn;
 	int length;
 	
 	public SITColumn(String initialGroup, int length) {
 		this.initialGroup = initialGroup;
-		this.SITColumn = new SITCell[length];
+		this.sitColumn = new SITCell[length];
 		this.length = length;
 
 	}
