@@ -487,6 +487,138 @@ public class DiveCalculator implements ActionListener {
 	}
 
 	public static void generateRepeatTable() {
+		rpTable.repeatDiveTable[0] = new RepeatDiveRow("A", 10);
+		rpTable.repeatDiveTable[0].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 40, 7);
+		rpTable.repeatDiveTable[0].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 50, 6);
+		rpTable.repeatDiveTable[0].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 60, 5);
+		rpTable.repeatDiveTable[0].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 70, 4);
+		rpTable.repeatDiveTable[0].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 80, 4);
+		rpTable.repeatDiveTable[0].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 90, 3);
+		rpTable.repeatDiveTable[0].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 100, 3);
+		rpTable.repeatDiveTable[0].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 110, 3);
+		rpTable.repeatDiveTable[0].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 120, 3);
+		rpTable.repeatDiveTable[0].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 130, 3);
+
+		rpTable.repeatDiveTable[1] = new RepeatDiveRow("B", 10);
+		rpTable.repeatDiveTable[1].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 40, 17);
+		rpTable.repeatDiveTable[1].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 50, 13);
+		rpTable.repeatDiveTable[1].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 60, 11);
+		rpTable.repeatDiveTable[1].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 70, 9);
+		rpTable.repeatDiveTable[1].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 80, 8);
+		rpTable.repeatDiveTable[1].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 90, 7);
+		rpTable.repeatDiveTable[1].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 100, 7);
+		rpTable.repeatDiveTable[1].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 110, 6);
+		rpTable.repeatDiveTable[1].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 120, 6);
+		rpTable.repeatDiveTable[1].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[1].group, 130, 6);
+
+		rpTable.repeatDiveTable[2] = new RepeatDiveRow("C", 10);
+		rpTable.repeatDiveTable[2].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 40, 25);
+		rpTable.repeatDiveTable[2].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 50, 21);
+		rpTable.repeatDiveTable[2].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 60, 17);
+		rpTable.repeatDiveTable[2].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 70, 15);
+		rpTable.repeatDiveTable[2].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 80, 13);
+		rpTable.repeatDiveTable[2].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 90, 11);
+		rpTable.repeatDiveTable[2].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 100, 10);
+		rpTable.repeatDiveTable[2].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 110, 10);
+		rpTable.repeatDiveTable[2].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 120, 9);
+		rpTable.repeatDiveTable[2].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[2].group, 130, 8);
+
+		rpTable.repeatDiveTable[3] = new RepeatDiveRow("D", 10);
+		rpTable.repeatDiveTable[3].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 40, 37);
+		rpTable.repeatDiveTable[3].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 50, 29);
+		rpTable.repeatDiveTable[3].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 60, 24);
+		rpTable.repeatDiveTable[3].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 70, 20);
+		rpTable.repeatDiveTable[3].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 80, 18);
+		rpTable.repeatDiveTable[3].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 90, 16);
+		rpTable.repeatDiveTable[3].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 100, 14);
+		rpTable.repeatDiveTable[3].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 110, 13);
+		rpTable.repeatDiveTable[3].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 120, 12);
+		rpTable.repeatDiveTable[3].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[3].group, 130, 11);
+
+		rpTable.repeatDiveTable[4] = new RepeatDiveRow("E", 10);
+		rpTable.repeatDiveTable[4].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 40, 49);
+		rpTable.repeatDiveTable[4].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 50, 38);
+		rpTable.repeatDiveTable[4].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 60, 30);
+		rpTable.repeatDiveTable[4].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 70, 26);
+		rpTable.repeatDiveTable[4].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 80, 23);
+		rpTable.repeatDiveTable[4].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 90, 20);
+		rpTable.repeatDiveTable[4].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 100, 18);
+		rpTable.repeatDiveTable[4].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 110, 16);
+		rpTable.repeatDiveTable[4].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 120, 15);
+		rpTable.repeatDiveTable[4].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[4].group, 130, 13);
+
+		rpTable.repeatDiveTable[5] = new RepeatDiveRow("F", 10);
+		rpTable.repeatDiveTable[5].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 40, 61);
+		rpTable.repeatDiveTable[5].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 50, 47);
+		rpTable.repeatDiveTable[5].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 60, 36);
+		rpTable.repeatDiveTable[5].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 70, 31);
+		rpTable.repeatDiveTable[5].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 80, 28);
+		rpTable.repeatDiveTable[5].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 90, 24);
+		rpTable.repeatDiveTable[5].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 100, 22);
+		rpTable.repeatDiveTable[5].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 110, 20);
+		rpTable.repeatDiveTable[5].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 120, 18);
+		rpTable.repeatDiveTable[5].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[5].group, 130, 16);
+
+		rpTable.repeatDiveTable[6] = new RepeatDiveRow("G", 10);
+		rpTable.repeatDiveTable[6].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 40, 73);
+		rpTable.repeatDiveTable[6].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 50, 56);
+		rpTable.repeatDiveTable[6].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 60, 44);
+		rpTable.repeatDiveTable[6].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 70, 37);
+		rpTable.repeatDiveTable[6].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 80, 32);
+		rpTable.repeatDiveTable[6].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 90, 29);
+		rpTable.repeatDiveTable[6].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 100, 26);
+		rpTable.repeatDiveTable[6].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 110, 24);
+		rpTable.repeatDiveTable[6].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 120, 21);
+		rpTable.repeatDiveTable[6].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[6].group, 130, 19);
+
+		rpTable.repeatDiveTable[7] = new RepeatDiveRow("H", 10);
+		rpTable.repeatDiveTable[7].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 40, 87);
+		rpTable.repeatDiveTable[7].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 50, 66);
+		rpTable.repeatDiveTable[7].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 60, 52);
+		rpTable.repeatDiveTable[7].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 70, 43);
+		rpTable.repeatDiveTable[7].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 80, 38);
+		rpTable.repeatDiveTable[7].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 90, 33);
+		rpTable.repeatDiveTable[7].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 100, 30);
+		rpTable.repeatDiveTable[7].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 110, 27);
+		rpTable.repeatDiveTable[7].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 120, 25);
+		rpTable.repeatDiveTable[7].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[7].group, 130, 22);
+
+		rpTable.repeatDiveTable[8] = new RepeatDiveRow("I", 10);
+		rpTable.repeatDiveTable[8].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 40, 101);
+		rpTable.repeatDiveTable[8].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 50, 76);
+		rpTable.repeatDiveTable[8].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 60, 61);
+		rpTable.repeatDiveTable[8].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 70, 50);
+		rpTable.repeatDiveTable[8].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 80, 43);
+		rpTable.repeatDiveTable[8].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 90, 38);
+		rpTable.repeatDiveTable[8].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 100, 34);
+		rpTable.repeatDiveTable[8].repeatDiveRow[7] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 110, 31);
+		rpTable.repeatDiveTable[8].repeatDiveRow[8] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 120, 28);
+		rpTable.repeatDiveTable[8].repeatDiveRow[9] = new RepeatDiveCell(rpTable.repeatDiveTable[8].group, 130, 25);
+
+		rpTable.repeatDiveTable[9] = new RepeatDiveRow("J", 7);
+		rpTable.repeatDiveTable[9].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 40, 116);
+		rpTable.repeatDiveTable[9].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 50, 87);
+		rpTable.repeatDiveTable[9].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 60, 70);
+		rpTable.repeatDiveTable[9].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 70, 57);
+		rpTable.repeatDiveTable[9].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 80, 48);
+		rpTable.repeatDiveTable[9].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 90, 43);
+		rpTable.repeatDiveTable[9].repeatDiveRow[6] = new RepeatDiveCell(rpTable.repeatDiveTable[9].group, 100, 38);
+
+		rpTable.repeatDiveTable[10] = new RepeatDiveRow("K", 6);
+		rpTable.repeatDiveTable[10].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 40, 138);
+		rpTable.repeatDiveTable[10].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 50, 99);
+		rpTable.repeatDiveTable[10].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 60, 79);
+		rpTable.repeatDiveTable[10].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 70, 64);
+		rpTable.repeatDiveTable[10].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 80, 54);
+		rpTable.repeatDiveTable[10].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[10].group, 90, 47);
+
+		rpTable.repeatDiveTable[11] = new RepeatDiveRow("L", 6);
+		rpTable.repeatDiveTable[11].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 40, 161);
+		rpTable.repeatDiveTable[11].repeatDiveRow[1] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 50, 111);
+		rpTable.repeatDiveTable[11].repeatDiveRow[2] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 60, 88);
+		rpTable.repeatDiveTable[11].repeatDiveRow[3] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 70, 72);
+		rpTable.repeatDiveTable[11].repeatDiveRow[4] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 80, 61);
+		rpTable.repeatDiveTable[11].repeatDiveRow[5] = new RepeatDiveCell(rpTable.repeatDiveTable[11].group, 90, 53);
 
 	}
 }
