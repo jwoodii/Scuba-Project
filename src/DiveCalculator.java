@@ -433,23 +433,56 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[2] = new SITColumn("C", 3);
 		sitTable.sitTable[2].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
 		sitTable.sitTable[2].SITColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
-		sitTable.sitTable[2].SITColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "c");
+		sitTable.sitTable[2].SITColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
 		sitTable.sitTable[3] = new SITColumn("D", 4);
-
+		
 		sitTable.sitTable[4] = new SITColumn("E", 5);
-
+		sitTable.sitTable[4].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup,"A");
+		sitTable.sitTable[4].SITColumn[1] = new SITCell(394, sitTable.sitTable[4].initialGroup, "B");
+		sitTable.sitTable[4].SITColumn[2] = new SITCell(204, sitTable.sitTable[4].initialGroup, "C");
+		sitTable.sitTable[4].SITColumn[3] = new SITCell(117, sitTable.sitTable[4].initialGroup, "D");
+		sitTable.sitTable[4].SITColumn[4] = new SITCell(54, sitTable.sitTable[4].initialGroup, "E");
+		
 		sitTable.sitTable[5] = new SITColumn("F", 6);
+		
 
 		sitTable.sitTable[6] = new SITColumn("G", 7);
-
+		sitTable.sitTable[6].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[6].initialGroup,"A");
+    sitTable.sitTable[6].SITColumn[1] = new SITCell(455, sitTable.sitTable[6].initialGroup, "B");
+    sitTable.sitTable[6].SITColumn[2] = new SITCell(265, sitTable.sitTable[6].initialGroup, "C");
+    sitTable.sitTable[6].SITColumn[3] = new SITCell(178, sitTable.sitTable[6].initialGroup, "D");
+    sitTable.sitTable[6].SITColumn[4] = new SITCell(119, sitTable.sitTable[6].initialGroup, "E");
+    sitTable.sitTable[6].SITColumn[5] = new SITCell(75, sitTable.sitTable[6].initialGroup, "F");
+    sitTable.sitTable[6].SITColumn[6] = new SITCell(40, sitTable.sitTable[6].initialGroup, "G");
+    
 		sitTable.sitTable[7] = new SITColumn("H", 8);
-
+		
 		sitTable.sitTable[8] = new SITColumn("I", 9);
-
+		sitTable.sitTable[8].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[8].initialGroup,"A");
+    sitTable.sitTable[8].SITColumn[1] = new SITCell(501, sitTable.sitTable[8].initialGroup, "B");
+    sitTable.sitTable[8].SITColumn[2] = new SITCell(321, sitTable.sitTable[8].initialGroup, "C");
+    sitTable.sitTable[8].SITColumn[3] = new SITCell(223, sitTable.sitTable[8].initialGroup, "D");
+    sitTable.sitTable[8].SITColumn[4] = new SITCell(164, sitTable.sitTable[8].initialGroup, "E");
+    sitTable.sitTable[8].SITColumn[5] = new SITCell(122, sitTable.sitTable[8].initialGroup, "F");
+    sitTable.sitTable[8].SITColumn[6] = new SITCell(89, sitTable.sitTable[8].initialGroup, "G");
+    sitTable.sitTable[8].SITColumn[7] = new SITCell(59, sitTable.sitTable[8].initialGroup, "H");
+    sitTable.sitTable[8].SITColumn[8] = new SITCell(33, sitTable.sitTable[8].initialGroup, "I");
+    
 		sitTable.sitTable[9] = new SITColumn("J", 10);
 
 		sitTable.sitTable[10] = new SITColumn("K", 11);
-
+		sitTable.sitTable[10].SITColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[10].initialGroup,"A");
+		sitTable.sitTable[10].SITColumn[1] = new SITCell(538, sitTable.sitTable[10].initialGroup, "B");
+		sitTable.sitTable[10].SITColumn[2] = new SITCell(348, sitTable.sitTable[10].initialGroup, "C");
+		sitTable.sitTable[10].SITColumn[3] = new SITCell(259, sitTable.sitTable[10].initialGroup, "D");
+		sitTable.sitTable[10].SITColumn[4] = new SITCell(201, sitTable.sitTable[10].initialGroup, "E");
+		sitTable.sitTable[10].SITColumn[5] = new SITCell(158, sitTable.sitTable[10].initialGroup, "F");
+		sitTable.sitTable[10].SITColumn[6] = new SITCell(123, sitTable.sitTable[10].initialGroup, "G");
+		sitTable.sitTable[10].SITColumn[7] = new SITCell(95, sitTable.sitTable[10].initialGroup, "H");
+		sitTable.sitTable[10].SITColumn[8] = new SITCell(71, sitTable.sitTable[10].initialGroup, "I");
+		sitTable.sitTable[10].SITColumn[9] = new SITCell(49, sitTable.sitTable[10].initialGroup, "J");
+		sitTable.sitTable[10].SITColumn[10] = new SITCell(28, sitTable.sitTable[10].initialGroup, "K");
+		
 		sitTable.sitTable[11] = new SITColumn("L", 12);
 	}
 
