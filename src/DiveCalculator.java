@@ -465,15 +465,22 @@ public class DiveCalculator implements ActionListener {
 	public static void generateSITTable() {
 		sitTable.sitTable[0] = new SITColumn("A", 1);
 		sitTable.sitTable[0].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
+		
 		sitTable.sitTable[1] = new SITColumn("B", 2);
 		sitTable.sitTable[1].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
 		sitTable.sitTable[1].sitColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
+		
 		sitTable.sitTable[2] = new SITColumn("C", 3);
 		sitTable.sitTable[2].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
 		sitTable.sitTable[2].sitColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
 		sitTable.sitTable[2].sitColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
+		
 		sitTable.sitTable[3] = new SITColumn("D", 4);
-
+		sitTable.sitTable[3].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[3].initialGroup, "A");
+		sitTable.sitTable[3].sitColumn[1] = new SITCell(348, sitTable.sitTable[3].initialGroup, "B");
+		sitTable.sitTable[3].sitColumn[2] = new SITCell(158, sitTable.sitTable[3].initialGroup, "C");
+		sitTable.sitTable[3].sitColumn[3] = new SITCell(69, sitTable.sitTable[3].initialGroup, "D");
+		
 		sitTable.sitTable[4] = new SITColumn("E", 5);
 		sitTable.sitTable[4].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup, "A");
 		sitTable.sitTable[4].sitColumn[1] = new SITCell(394, sitTable.sitTable[4].initialGroup, "B");
@@ -482,7 +489,13 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[4].sitColumn[4] = new SITCell(54, sitTable.sitTable[4].initialGroup, "E");
 
 		sitTable.sitTable[5] = new SITColumn("F", 6);
-
+		sitTable.sitTable[5].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup, "A");
+		sitTable.sitTable[5].sitColumn[1] = new SITCell(425, sitTable.sitTable[5].initialGroup, "B");
+		sitTable.sitTable[5].sitColumn[2] = new SITCell(237, sitTable.sitTable[5].initialGroup, "C");
+		sitTable.sitTable[5].sitColumn[3] = new SITCell(148, sitTable.sitTable[5].initialGroup, "D");
+		sitTable.sitTable[5].sitColumn[4] = new SITCell(89, sitTable.sitTable[5].initialGroup, "E");
+		sitTable.sitTable[5].sitColumn[5] = new SITCell(45, sitTable.sitTable[5].initialGroup, "F");
+		
 		sitTable.sitTable[6] = new SITColumn("G", 7);
 		sitTable.sitTable[6].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[6].initialGroup, "A");
 		sitTable.sitTable[6].sitColumn[1] = new SITCell(455, sitTable.sitTable[6].initialGroup, "B");
@@ -493,7 +506,16 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[6].sitColumn[6] = new SITCell(40, sitTable.sitTable[6].initialGroup, "G");
 
 		sitTable.sitTable[7] = new SITColumn("H", 8);
+		sitTable.sitTable[7].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[7].initialGroup, "A");
+		sitTable.sitTable[7].sitColumn[1] = new SITCell(479, sitTable.sitTable[7].initialGroup, "B");
+		sitTable.sitTable[7].sitColumn[2] = new SITCell(289, sitTable.sitTable[7].initialGroup, "C");
+		sitTable.sitTable[7].sitColumn[3] = new SITCell(200, sitTable.sitTable[7].initialGroup, "D");
+		sitTable.sitTable[7].sitColumn[4] = new SITCell(143, sitTable.sitTable[7].initialGroup, "E");
+		sitTable.sitTable[7].sitColumn[5] = new SITCell(101, sitTable.sitTable[7].initialGroup, "F");
+		sitTable.sitTable[7].sitColumn[6] = new SITCell(66, sitTable.sitTable[7].initialGroup, "G");
+		sitTable.sitTable[7].sitColumn[7] = new SITCell(36, sitTable.sitTable[7].initialGroup, "H");
 
+		
 		sitTable.sitTable[8] = new SITColumn("I", 9);
 		sitTable.sitTable[8].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[8].initialGroup, "A");
 		sitTable.sitTable[8].sitColumn[1] = new SITCell(501, sitTable.sitTable[8].initialGroup, "B");
@@ -506,7 +528,17 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[8].sitColumn[8] = new SITCell(33, sitTable.sitTable[8].initialGroup, "I");
 
 		sitTable.sitTable[9] = new SITColumn("J", 10);
+		sitTable.sitTable[9].sitColumn[1] = new SITCell(530, sitTable.sitTable[9].initialGroup, "B");
+		sitTable.sitTable[9].sitColumn[2] = new SITCell(340, sitTable.sitTable[9].initialGroup, "C");
+		sitTable.sitTable[9].sitColumn[3] = new SITCell(243, sitTable.sitTable[9].initialGroup, "D");
+		sitTable.sitTable[9].sitColumn[4] = new SITCell(184, sitTable.sitTable[9].initialGroup, "E");
+		sitTable.sitTable[9].sitColumn[5] = new SITCell(140, sitTable.sitTable[9].initialGroup, "F");
+		sitTable.sitTable[9].sitColumn[6] = new SITCell(107, sitTable.sitTable[9].initialGroup, "G");
+		sitTable.sitTable[9].sitColumn[7] = new SITCell(79, sitTable.sitTable[9].initialGroup, "H");
+		sitTable.sitTable[9].sitColumn[8] = new SITCell(54, sitTable.sitTable[9].initialGroup, "I");
+		sitTable.sitTable[9].sitColumn[9] = new SITCell(31, sitTable.sitTable[9].initialGroup, "J");
 
+		
 		sitTable.sitTable[10] = new SITColumn("K", 11);
 		sitTable.sitTable[10].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[10].initialGroup, "A");
 		sitTable.sitTable[10].sitColumn[1] = new SITCell(538, sitTable.sitTable[10].initialGroup, "B");
@@ -521,6 +553,18 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[10].sitColumn[10] = new SITCell(28, sitTable.sitTable[10].initialGroup, "K");
 
 		sitTable.sitTable[11] = new SITColumn("L", 12);
+		sitTable.sitTable[11].sitColumn[1] = new SITCell(552, sitTable.sitTable[11].initialGroup, "B");
+		sitTable.sitTable[11].sitColumn[2] = new SITCell(362, sitTable.sitTable[11].initialGroup, "C");
+		sitTable.sitTable[11].sitColumn[3] = new SITCell(275, sitTable.sitTable[11].initialGroup, "D");
+		sitTable.sitTable[11].sitColumn[4] = new SITCell(216, sitTable.sitTable[11].initialGroup, "E");
+		sitTable.sitTable[11].sitColumn[5] = new SITCell(173, sitTable.sitTable[11].initialGroup, "F");
+		sitTable.sitTable[11].sitColumn[6] = new SITCell(139, sitTable.sitTable[11].initialGroup, "G");
+		sitTable.sitTable[11].sitColumn[7] = new SITCell(109, sitTable.sitTable[11].initialGroup, "H");
+		sitTable.sitTable[11].sitColumn[8] = new SITCell(85, sitTable.sitTable[11].initialGroup, "I");
+		sitTable.sitTable[11].sitColumn[9] = new SITCell(64, sitTable.sitTable[11].initialGroup, "J");
+		sitTable.sitTable[11].sitColumn[10] = new SITCell(45, sitTable.sitTable[11].initialGroup, "K");
+		sitTable.sitTable[11].sitColumn[11] = new SITCell(26, sitTable.sitTable[11].initialGroup, "L");
+
 	}
 
 	public static void generateRepeatTable() {
