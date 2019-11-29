@@ -7,15 +7,24 @@ public class DiveCalculator implements ActionListener {
 	JTextField tfd, tft, tfih, tfim;
 	JTextArea tfa;
 	JScrollPane sp;
+	// tells if its a repeat dive or not
 	boolean repeatDive = false;
+	// used to keep track of number of inquiries, instructions are printed out every
+	// * dives
 	int counter = 0;
+	// Dive group, only changed by button press and diveCalc, diveCalcRD
 	String Group = null;
-	int RNT = 0;
+	// anything above max is auto group A
 	static final int maxSurfaceTime = 1440;
+	// anything below min is rejected
 	static final int minSurfaceTime = 10;
-
+	// Table 1 of Naui tables, used to tell group based on time and depth
 	public static DiveTable table = new DiveTable(10);
+	// Table 2 of Naui tables, used to tell new group based on initial group and
+	// Surface Interval Time (SIT)
 	public static SITTable sitTable = new SITTable(12);
+	// Table 3 of Naui tables, used to tell rnt based on group and depth, RNT must
+	// be subtracted from dive times listed in Table 1.
 	public static RepeatDiveTable rpTable = new RepeatDiveTable(12);
 
 	public static void main(String[] args) {
@@ -92,22 +101,24 @@ public class DiveCalculator implements ActionListener {
 			try {
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
+				// check if its an actual dive or just checking what can be done
+				if (depth == 0 || time == 0) {
+					if (depth == 0) {
+						tfa.append(maxDepthForTime(time) + "\n");
+						counter++;
+					} else if (time == 0) {
+						tfa.append(maxTimeForDepth(depth) + "\n");
+						counter++;
+					}
+				} else {
+					tfa.append(diveCalc(depth, time) + "\n");
+					counter++;
+					repeatDive = true;
+					tfih.setEditable(true);
+					tfim.setEditable(true);
+				}
 			} catch (NumberFormatException ex) {
 				tfa.append("Invalid Parameter\n");
-			}
-			// check if its an actual dive or just checking what can be done
-			if (depth == 0 || time == 0) {
-				if (depth == 0) {
-					tfa.append(maxDepthForTime(time) + "\n");
-				} else if (time == 0) {
-					tfa.append(maxTimeForDepth(depth) + "\n");
-				}
-			} else {
-				tfa.append(diveCalc(depth, time) + "\n");
-				counter++;
-				repeatDive = true;
-				tfih.setEditable(true);
-				tfim.setEditable(true);
 			}
 			// Start repeat dive calcs
 		} else {
@@ -115,38 +126,104 @@ public class DiveCalculator implements ActionListener {
 			String s2 = tft.getText();
 			String s3 = tfih.getText();
 			String s4 = tfim.getText();
-			int depth = 0, time = 0, intervalHours = 0, intervalMinutes = 0;
+			int depth, time, intervalHours, intervalMinutes;
 			// double check in case of non-integer inputs
 			try {
+				// part integers from strings
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
 				intervalHours = Integer.parseInt(s3);
 				intervalMinutes = Integer.parseInt(s4);
+				// turn SIT into minutes
+				int newTime = intervalHours * 60 + intervalMinutes;
+				// if time is less than minimum exit
+				if (newTime < minSurfaceTime) {
+					tfa.append("Interval time must be larger than 10 minutes");
+				} else {
+					// if time is greater than max SIT auto A
+					if (newTime > maxSurfaceTime) {
+						Group = "A";
+						// else calc new group
+					} else {
+						Group = newGroup(Group, newTime);
+					}
+					// if depth = 0 run maxDepthForTimeRD
+					if (depth == 0) {
+						tfa.append(maxDepthForTimeRD(time) + "\n");
+					}
+					// else if time = 0 run maxTimeForDepthRD
+					else if (time == 0) {
+						tfa.append(maxTimeForDepth(depth));
+					}
+					// else run diveCalcRD
+					else {
+						tfa.append(diveCalcRD(time, depth) + "\n");
+					}
+				}
 			} catch (NumberFormatException ex) {
 				tfa.append("Invalid Parameter\n");
 			}
 		}
-
 		tfd.setText(null);
 		tft.setText(null);
 		tfih.setText(null);
 		tfim.setText(null);
 	}
 
-	// dive table based on NAUI Dive table. built as array to allow for easy change.
-	// builds dive table
-//	public String sentence(int depth, int time) {
-//		String sentence = "";
-//		if (depth == 0) {
-//			sentence = maxDepthForTimeRD(time);
-//		} else if (time == 0) {
-//			sentence = maxTimeForDepthRD(depth);
-//		} else {
-//			sentence = diveCalc(depth, time);
-//		}
-//		return sentence;
-//	}
-	public static String newGroup(String initGroup, int minutes) {
+	public String diveCalcRD(int depth, int time) {
+		String safety = "";
+
+		return safety;
+	}
+
+	public String maxDepthForTimeRD(int time) {
+		String safety = "";
+		// find max depth for time given
+
+		// calculate rnt for max depth
+
+		// if time + rnt > max time for given depth
+
+		// move up one depth and begin again
+
+		// else return results;
+		return safety;
+	}
+
+	public String maxTimeForDepthRD(int depth) {
+		String safety = "";
+		int time;
+		// calc rnt for given depth
+		int rnt = newRNT(Group, depth);
+		// find max time for the given depth
+		for (int i = 0; i < table.diveTable.length; i++) {
+			// check depth
+			if (table.diveTable[i].depth == depth) {
+				// set index to last cell of row
+				int length = table.diveTable[i].length - 1;
+				// check for safety stops, and creates safety stop/ time at 15'
+				if (table.diveTable[i].diveRow[length].safetyStop) {
+					// calc safety stop time - rnt
+					time = table.diveTable[i].diveRow[length].time - rnt;
+					safety = "You can dive for a maximum of " + time + " minutes at " + depth
+							+ ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
+							+ " minutes at 15'.";
+				}
+				// checks if there a safety stop is still needed
+				while (table.diveTable[i].diveRow[length].safetyStop) {
+					// goes one back to till we find a non safety stop time
+					length--;
+				}
+				// calc non-safety stop time - rnt
+				time = table.diveTable[i].diveRow[length].time - rnt;
+				// appends longest time allowed without safety stop to safety stop time
+				return "You can dive for " + time + " minutes without making a safety stop.\n" + safety;
+			}
+		}
+		return safety;
+	}
+
+	public String newGroup(String initGroup, int minutes) {
 		if (minutes > maxSurfaceTime) {
 			return "A";
 		}
@@ -166,16 +243,16 @@ public class DiveCalculator implements ActionListener {
 		return null;
 	}
 
-	public static int newRNT(String group, int depth) {
+	public int newRNT(String group, int depth) {
 		for (int i = 0; i < rpTable.repeatDiveTable.length; i++) {
 			if (rpTable.repeatDiveTable[i].group == group) {
 				int ones = depth / 10;
 				int newDepth = depth;
-				if(ones != 0) {
+				if (ones != 0) {
 					newDepth = (((depth % 10) + 1) * 10);
 				}
 				for (int j = 0; j < rpTable.repeatDiveTable[i].length; j++) {
-					if(rpTable.repeatDiveTable[i].repeatDiveRow[j].depth == newDepth) {
+					if (rpTable.repeatDiveTable[i].repeatDiveRow[j].depth == newDepth) {
 						return rpTable.repeatDiveTable[i].repeatDiveRow[j].RNT;
 					}
 				}
@@ -183,69 +260,8 @@ public class DiveCalculator implements ActionListener {
 		}
 		return 0;
 	}
-//	public static String maxTimeForDepthRD(int depth) {
-//		String safety = "";
-//		// run through table to find right depth
-//		for (int i = 0; i < table.diveTable.length; i++) {
-//			// check depth
-//			if (table.diveTable[i].depth == depth) {
-//				// set index to last cell of row
-//				int length = table.diveTable[i].length - 1;
-//				// check for safety stops, and creates safety stop/ time at 15'
-//				if (table.diveTable[i].diveRow[length].safetyStop) {
-//					safety = "You can dive for a maximum of " + table.diveTable[i].diveRow[length].time + " minutes at "
-//							+ depth + ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
-//							+ " minutes at 15'.";
-//				}
-//				// checks if there a safety stop is needed
-//				while (table.diveTable[i].diveRow[length].safetyStop) {
-//					// goes one back to till we find a non safety stop time
-//					length--;
-//				}
-//				// appends longest time allowed without safety stop to safety stop time
-//				return "You can dive for " + table.diveTable[i].diveRow[length].time
-//						+ " minutes without making a safety stop.\n" + safety;
-//			}
-//		}
-//		return safety;
-//	}
-//
-//	public static String maxDepthForTimeRD(int time) {
-//		// to keep the while loop running
-//		boolean go = true;
-//		// index for what dive row
-//		int x = 0;
-//		// place holder for the length of the dive row, allows us to jump to the max
-//		// time at depth.
-//		int length;
-//		// starts off as invalid because if time is greater then the most shallow depth,
-//		// the time is invalid
-//		String safety = "Invalid Time";
-//		while (go) {
-//			// set length to max length
-//			length = table.diveTable[x].length - 1;
-//			// check if time is beyond max time for x depth
-//			if (time > table.diveTable[x].diveRow[length].time) {
-//				return safety;
-//			} else {
-//				// replace safety with current max depth
-//				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
-//						+ time + " minutes.";
-//				// increment to next depth
-//				x++;
-//				// check that we haven't hit the maximum depth of the table
-//				if (x == table.diveTable.length) {
-//					// return the current depth if we have hit the max depth
-//					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
-//							+ " feet for " + time + " minutes.";
-//				}
-//
-//			}
-//		}
-//		return safety;
-//	}
 
-	public static String maxTimeForDepth(int depth) {
+	public String maxTimeForDepth(int depth) {
 		String safety = "";
 		// run through table to find right depth
 		for (int i = 0; i < table.diveTable.length; i++) {
@@ -272,7 +288,7 @@ public class DiveCalculator implements ActionListener {
 		return safety;
 	}
 
-	public static String maxDepthForTime(int time) {
+	public String maxDepthForTime(int time) {
 		// to keep the while loop running
 		boolean go = true;
 		// index for what dive row
@@ -465,22 +481,22 @@ public class DiveCalculator implements ActionListener {
 	public static void generateSITTable() {
 		sitTable.sitTable[0] = new SITColumn("A", 1);
 		sitTable.sitTable[0].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
-		
+
 		sitTable.sitTable[1] = new SITColumn("B", 2);
 		sitTable.sitTable[1].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[1].initialGroup, "A");
 		sitTable.sitTable[1].sitColumn[1] = new SITCell(200, sitTable.sitTable[1].initialGroup, "B");
-		
+
 		sitTable.sitTable[2] = new SITColumn("C", 3);
 		sitTable.sitTable[2].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
 		sitTable.sitTable[2].sitColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
 		sitTable.sitTable[2].sitColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
-		
+
 		sitTable.sitTable[3] = new SITColumn("D", 4);
 		sitTable.sitTable[3].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[3].initialGroup, "A");
 		sitTable.sitTable[3].sitColumn[1] = new SITCell(348, sitTable.sitTable[3].initialGroup, "B");
 		sitTable.sitTable[3].sitColumn[2] = new SITCell(158, sitTable.sitTable[3].initialGroup, "C");
 		sitTable.sitTable[3].sitColumn[3] = new SITCell(69, sitTable.sitTable[3].initialGroup, "D");
-		
+
 		sitTable.sitTable[4] = new SITColumn("E", 5);
 		sitTable.sitTable[4].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[4].initialGroup, "A");
 		sitTable.sitTable[4].sitColumn[1] = new SITCell(394, sitTable.sitTable[4].initialGroup, "B");
@@ -495,7 +511,7 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[5].sitColumn[3] = new SITCell(148, sitTable.sitTable[5].initialGroup, "D");
 		sitTable.sitTable[5].sitColumn[4] = new SITCell(89, sitTable.sitTable[5].initialGroup, "E");
 		sitTable.sitTable[5].sitColumn[5] = new SITCell(45, sitTable.sitTable[5].initialGroup, "F");
-		
+
 		sitTable.sitTable[6] = new SITColumn("G", 7);
 		sitTable.sitTable[6].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[6].initialGroup, "A");
 		sitTable.sitTable[6].sitColumn[1] = new SITCell(455, sitTable.sitTable[6].initialGroup, "B");
@@ -515,7 +531,6 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[7].sitColumn[6] = new SITCell(66, sitTable.sitTable[7].initialGroup, "G");
 		sitTable.sitTable[7].sitColumn[7] = new SITCell(36, sitTable.sitTable[7].initialGroup, "H");
 
-		
 		sitTable.sitTable[8] = new SITColumn("I", 9);
 		sitTable.sitTable[8].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[8].initialGroup, "A");
 		sitTable.sitTable[8].sitColumn[1] = new SITCell(501, sitTable.sitTable[8].initialGroup, "B");
@@ -538,7 +553,6 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[9].sitColumn[8] = new SITCell(54, sitTable.sitTable[9].initialGroup, "I");
 		sitTable.sitTable[9].sitColumn[9] = new SITCell(31, sitTable.sitTable[9].initialGroup, "J");
 
-		
 		sitTable.sitTable[10] = new SITColumn("K", 11);
 		sitTable.sitTable[10].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[10].initialGroup, "A");
 		sitTable.sitTable[10].sitColumn[1] = new SITCell(538, sitTable.sitTable[10].initialGroup, "B");
