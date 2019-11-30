@@ -101,39 +101,46 @@ public class DiveCalculator implements ActionListener {
 			try {
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
-				// check if its an actual dive or just checking what can be done
-				if (depth == 0 || time == 0) {
-					if (depth == 0) {
-						tfa.append(maxDepthForTime(time) + "\n");
+				if (depth < 130 && depth > 0) {
+					// check if its an actual dive or just checking what can be done
+					if (depth == 0 || time == 0) {
+						if (depth == 0) {
+							tfa.append(maxDepthForTime(time) + "\n");
+							counter++;
+						} else if (time == 0) {
+							tfa.append(maxTimeForDepth(depth) + "\n");
+							counter++;
+						}
+					} else {
+						tfa.append(diveCalc(depth, time) + "\n");
 						counter++;
-					} else if (time == 0) {
-						tfa.append(maxTimeForDepth(depth) + "\n");
-						counter++;
+						repeatDive = true;
+						tfih.setEditable(true);
+						tfim.setEditable(true);
 					}
-				} else {
-					tfa.append(diveCalc(depth, time) + "\n");
-					counter++;
-					repeatDive = true;
-					tfih.setEditable(true);
-					tfim.setEditable(true);
+				}
+				else {
+					tfa.append("Invalid Depth\n");
 				}
 			} catch (NumberFormatException ex) {
 				tfa.append("Invalid Parameter\n");
 			}
 			// Start repeat dive calcs
 		} else {
-			String s1 = tfd.getText();
-			String s2 = tft.getText();
+			String s1 = tft.getText();
+			String s2 = tfd.getText();
 			String s3 = tfih.getText();
 			String s4 = tfim.getText();
 			int depth, time, intervalHours, intervalMinutes;
 			// double check in case of non-integer inputs
 			try {
+				String oldGroup = Group;
 				// part integers from strings
-				depth = Integer.parseInt(s1);
-				time = Integer.parseInt(s2);
+				depth = Integer.parseInt(s2);
+				time = Integer.parseInt(s1);
 				intervalHours = Integer.parseInt(s3);
 				intervalMinutes = Integer.parseInt(s4);
+				tfa.append("You are resting for " + intervalHours + " hours and " + intervalMinutes + " minutes.\n");
 				// turn SIT into minutes
 				int newTime = intervalHours * 60 + intervalMinutes;
 				// if time is less than minimum exit
@@ -147,17 +154,24 @@ public class DiveCalculator implements ActionListener {
 					} else {
 						Group = newGroup(Group, newTime);
 					}
+					/*
+					 * PROBLEM HERE when you enter a 0 for time or depth a new group is calculated
+					 * based on surface time, and you must re enter surface time again
+					 */
+					tfa.append("Your new group is " + Group + ".\n");
 					// if depth = 0 run maxDepthForTimeRD
 					if (depth == 0) {
 						tfa.append(maxDepthForTimeRD(time) + "\n");
+						Group = oldGroup;
 					}
 					// else if time = 0 run maxTimeForDepthRD
 					else if (time == 0) {
-						tfa.append(maxTimeForDepth(depth));
+						tfa.append(maxTimeForDepthRD(depth));
+						Group = oldGroup;
 					}
 					// else run diveCalcRD
 					else {
-						tfa.append(diveCalcRD(time, depth) + "\n");
+						tfa.append(diveCalcRD(depth, time) + "\n");
 					}
 				}
 			} catch (NumberFormatException ex) {
@@ -171,25 +185,108 @@ public class DiveCalculator implements ActionListener {
 	}
 
 	public String diveCalcRD(int depth, int time) {
+		// if the depth is above the max depth we can automatically return invalid
+		// depth. this
+		// prevents array out of bounds.
+		// this can be put into main later so that depth is checked automagically
+		if (depth > table.diveTable[table.diveTable.length - 1].depth) {
+			return "Invalid Depth";
+		}
+		// if depth is valid we move on.
 		String safety = "";
+		int x, y;
+		if (depth < 40) {
+			y = 0;
+		} else {
+			// x checks to see if depth is a multiple of ten while y gets the tens place.
+			x = depth % 10;
+			y = depth / 10;
+			// if x is not zero this means it is not a multiple of ten and we add one to y
+			if (x != 0) {
+				y++;
+			}
 
+			// we minus 4 to change y into index to get us the right depth row.
+			y = y - 4;
+		}
+		// calc new RNT for given depth
+		System.out.println(Group);
+		int rnt = newRNT(Group, depth);
+		// add rnt to time
+		int newTime = rnt + time;
+		// this checks if the time is above the max time or not. if so return invalid
+		// time
+		if (table.diveTable[y].diveRow[table.diveTable[y].diveRow.length - 1].time < newTime) {
+			return "Invalid Time";
+		}
+		// if time is valid we run through each time interval of the given row.
+		for (int i = 0; i < table.diveTable[y].length; i++) {
+			// we check if time is in the time interval and return the results or continue
+			// on/
+			if (newTime <= table.diveTable[y].diveRow[i].time) {
+				safety = "Your RNT is " + rnt + " minutes.\nYou are diving to a depth of " + depth + " feet for " + time
+						+ " minutes.\nYou are in group " + table.diveTable[y].diveRow[i].group + ".\n";
+				Group = table.diveTable[y].diveRow[i].group;
+				if (table.diveTable[y].diveRow[i].safetyStop) {
+					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime
+							+ " minutes at 15'.\n";
+				}
+				return safety;
+			}
+		}
 		return safety;
 	}
 
+	// honestly here we could combine both maxDepthForTime and just make it change
+	// based on repeat dive, but we're running out of time
+
+	/*
+	 * need to add in check for safety stops
+	 */
 	public String maxDepthForTimeRD(int time) {
-		String safety = "";
-		// find max depth for time given
+		// to keep the while loop running
+		boolean go = true;
+		// index for what dive row
+		int x = 0;
+		// place holder for the length of the dive row, allows us to jump to the max
+		// time at depth.
+		int length;
+		// place holder for rnt
+		int rnt = 0;
+		// place holder for time + rnt
+		int newTime = 0;
+		// starts off as invalid because if time is greater then the most shallow depth,
+		// the time is invalid
+		String safety = "Invalid Time";
+		while (go) {
+			// set length to max length
+			length = table.diveTable[x].length - 1;
+			// calc rnt
+			rnt = newRNT(Group, table.diveTable[x].depth);
+			// add time to rnt
+			newTime = time + rnt;
+			// check if time is beyond max time for x depth
+			if (newTime > table.diveTable[x].diveRow[length].time) {
+				return safety;
+			} else {
+				// replace safety with current max depth
+				safety = "Your RNT is " + rnt + " minutes.\nYou can dive to a maximum depth of "
+						+ table.diveTable[x].diveRow[length].depth + " feet for " + time + " minutes.\n";
+				// increment to next depth
+				x++;
+				// check that we haven't hit the maximum depth of the table
+				if (x == table.diveTable.length) {
+					// return the current depth if we have hit the max depth
+					return "Your RNT is " + rnt + " minutes.\nYou can dive to a maximum depth of "
+							+ table.diveTable[x - 1].diveRow[length].depth + " feet for " + time + " minutes.\n";
+				}
 
-		// calculate rnt for max depth
-
-		// if time + rnt > max time for given depth
-
-		// move up one depth and begin again
-
-		// else return results;
+			}
+		}
 		return safety;
 	}
 
+	// same goes here, could make one method but time constraints suck
 	public String maxTimeForDepthRD(int depth) {
 		String safety = "";
 		int time;
@@ -205,9 +302,9 @@ public class DiveCalculator implements ActionListener {
 				if (table.diveTable[i].diveRow[length].safetyStop) {
 					// calc safety stop time - rnt
 					time = table.diveTable[i].diveRow[length].time - rnt;
-					safety = "You can dive for a maximum of " + time + " minutes at " + depth
+					safety = " You can dive for a maximum of " + time + " minutes at " + depth
 							+ ".\nYou will need to stop " + table.diveTable[i].diveRow[length].stopTime
-							+ " minutes at 15'.";
+							+ " minutes at 15'.\n";
 				}
 				// checks if there a safety stop is still needed
 				while (table.diveTable[i].diveRow[length].safetyStop) {
@@ -217,7 +314,8 @@ public class DiveCalculator implements ActionListener {
 				// calc non-safety stop time - rnt
 				time = table.diveTable[i].diveRow[length].time - rnt;
 				// appends longest time allowed without safety stop to safety stop time
-				return "You can dive for " + time + " minutes without making a safety stop.\n" + safety;
+				return "Your RNT is " + rnt + " minutes.\nYou can dive for " + time
+						+ " minutes without making a safety stop.\n" + safety;
 			}
 		}
 		return safety;
@@ -246,10 +344,10 @@ public class DiveCalculator implements ActionListener {
 	public int newRNT(String group, int depth) {
 		for (int i = 0; i < rpTable.repeatDiveTable.length; i++) {
 			if (rpTable.repeatDiveTable[i].group == group) {
-				int ones = depth / 10;
+				int ones = depth % 10;
 				int newDepth = depth;
 				if (ones != 0) {
-					newDepth = (((depth % 10) + 1) * 10);
+					newDepth = (((depth / 10) + 1) * 10);
 				}
 				for (int j = 0; j < rpTable.repeatDiveTable[i].length; j++) {
 					if (rpTable.repeatDiveTable[i].repeatDiveRow[j].depth == newDepth) {
@@ -288,6 +386,9 @@ public class DiveCalculator implements ActionListener {
 		return safety;
 	}
 
+	/*
+	 * add check for safety stop.
+	 */
 	public String maxDepthForTime(int time) {
 		// to keep the while loop running
 		boolean go = true;
@@ -336,15 +437,21 @@ public class DiveCalculator implements ActionListener {
 		}
 		// if depth is valid we move on.
 		String safety = "";
-		// x checks to see if depth is a multiple of ten while y gets the tens place.
-		int x = depth % 10;
-		int y = depth / 10;
-		// if x is not zero this means it is not a multiple of ten and we add one to y
-		if (x != 0) {
-			y++;
+		int x, y;
+		if (depth < 40) {
+			y = 0;
+		} else {
+			// x checks to see if depth is a multiple of ten while y gets the tens place.
+			x = depth % 10;
+			y = depth / 10;
+			// if x is not zero this means it is not a multiple of ten and we add one to y
+			if (x != 0) {
+				y++;
+			}
+
+			// we minus 4 to change y into index to get us the right depth row.
+			y = y - 4;
 		}
-		// we minus 4 to change y into index to get us the right depth row.
-		y = y - 4;
 		// this checks if the time is above the max time or not. if so return invalid
 		// time
 		if (table.diveTable[y].diveRow[table.diveTable[y].diveRow.length - 1].time < time) {
@@ -355,12 +462,12 @@ public class DiveCalculator implements ActionListener {
 			// we check if time is in the time interval and return the results or continue
 			// on/
 			if (time <= table.diveTable[y].diveRow[i].time) {
-				safety = " You are diving to a depth of " + depth + " feet for " + time
-						+ " minutes.\n You are in group " + table.diveTable[y].diveRow[i].group + ".\n";
+				safety = " You are diving to a depth of " + depth + " feet for " + time + " minutes.\nYou are in group "
+						+ table.diveTable[y].diveRow[i].group + ".\n";
 				Group = table.diveTable[y].diveRow[i].group;
 				if (table.diveTable[y].diveRow[i].safetyStop) {
 					safety = safety + " You need to stop " + table.diveTable[y].diveRow[i].stopTime
-							+ " minutes at 15'.\n ";
+							+ " minutes at 15'.\n";
 				}
 				return safety;
 			}
