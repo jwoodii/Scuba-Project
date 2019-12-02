@@ -84,6 +84,9 @@ public class DiveCalculator implements ActionListener {
 		generateDiveTable();
 		generateSITTable();
 		generateRepeatTable();
+		
+		//warning that states it is a prototype and should not be used for any dive.
+		tfa.append("This product is a PROTOTYPE and should not be used for any real dive without additional calulations.\nThis uses the NAUI Dive Tables, and once again SHOULD NOT BE TRUSTED WITH YOUR LIFE.\n");
 	}
 
 	@Override
