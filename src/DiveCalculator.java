@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/*
+ * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+ */
 public class DiveCalculator implements ActionListener {
 	JTextField tfd, tft, tfih, tfim;
 	JTextArea tfa;
@@ -31,6 +34,9 @@ public class DiveCalculator implements ActionListener {
 		new DiveCalculator();
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public DiveCalculator() {
 		// Creating the Frame
 		JFrame frame = new JFrame("Dive Calculator");
@@ -39,11 +45,9 @@ public class DiveCalculator implements ActionListener {
 
 		// creating the panel at top and adding instructions
 		JPanel inst = new JPanel();
-		JLabel instruct = new JLabel("Enter in a Depth and time to check for group letter.");
-		JLabel instruct2 = new JLabel(
-				"Use a zero in either depth or time to be given the maximum Depth/Time for given value.");
+		JLabel instruct = new JLabel(
+				"This is a PROTOTYPE, DO NOT trust with your life. This is based on the NAUI Dive Tables.");
 		inst.add(instruct);
-		inst.add(instruct2);
 
 		// Creating the panel at bottom and adding components
 		JPanel panel = new JPanel(); // the panel is not visible in output
@@ -84,14 +88,16 @@ public class DiveCalculator implements ActionListener {
 		generateDiveTable();
 		generateSITTable();
 		generateRepeatTable();
-		
-		//warning that states it is a prototype and should not be used for any dive.
-		tfa.append("This product is a PROTOTYPE and should not be used for any real dive without additional calulations.\nThis uses the NAUI Dive Tables, and once again SHOULD NOT BE TRUSTED WITH YOUR LIFE.\n");
+
+		// warning that states it is a prototype and should not be used for any dive.
+		tfa.append(
+				"Enter in a Depth and time to check for group letter.\nUse a zero in either depth or time to be given the maximum Depth/Time for given value.\n");
+		counter++;
 	}
 
 	@Override
 	/*
-	 * CHECK IF DEPTH IS > 130 or < 0
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
 	 */
 	public void actionPerformed(ActionEvent e) {
 		// if it is not a repeat dive
@@ -104,7 +110,7 @@ public class DiveCalculator implements ActionListener {
 			try {
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
-				if (depth < 130 && depth > 0) {
+				if (depth < 130 && depth >= 0) {
 					// check if its an actual dive or just checking what can be done
 					if (depth == 0 || time == 0) {
 						if (depth == 0) {
@@ -121,8 +127,7 @@ public class DiveCalculator implements ActionListener {
 						tfih.setEditable(true);
 						tfim.setEditable(true);
 					}
-				}
-				else {
+				} else {
 					tfa.append("Invalid Depth\n");
 				}
 			} catch (NumberFormatException ex) {
@@ -155,7 +160,9 @@ public class DiveCalculator implements ActionListener {
 						Group = "A";
 						// else calc new group
 					} else {
+						System.out.println(Group);
 						Group = newGroup(Group, newTime);
+						System.out.println(Group);
 					}
 					/*
 					 * PROBLEM HERE when you enter a 0 for time or depth a new group is calculated
@@ -181,12 +188,19 @@ public class DiveCalculator implements ActionListener {
 				tfa.append("Invalid Parameter\n");
 			}
 		}
+		if (counter % 5 == 0) {
+			tfa.append(
+					"Enter in a Depth and time to check for group letter.\nUse a zero in either depth or time to be given the maximum Depth/Time for given value.\n");
+		}
 		tfd.setText(null);
 		tft.setText(null);
 		tfih.setText(null);
 		tfim.setText(null);
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public String diveCalcRD(int depth, int time) {
 		// if the depth is above the max depth we can automatically return invalid
 		// depth. this
@@ -213,7 +227,6 @@ public class DiveCalculator implements ActionListener {
 			y = y - 4;
 		}
 		// calc new RNT for given depth
-		System.out.println(Group);
 		int rnt = newRNT(Group, depth);
 		// add rnt to time
 		int newTime = rnt + time;
@@ -244,7 +257,7 @@ public class DiveCalculator implements ActionListener {
 	// based on repeat dive, but we're running out of time
 
 	/*
-	 * need to add in check for safety stops
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
 	 */
 	public String maxDepthForTimeRD(int time) {
 		// to keep the while loop running
@@ -275,13 +288,21 @@ public class DiveCalculator implements ActionListener {
 				// replace safety with current max depth
 				safety = "Your RNT is " + rnt + " minutes.\nYou can dive to a maximum depth of "
 						+ table.diveTable[x].diveRow[length].depth + " feet for " + time + " minutes.\n";
+				if (table.diveTable[x].diveRow[length].safetyStop) {
+					safety = safety + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
+							+ " minutes at 15'.\n";
+				}
 				// increment to next depth
 				x++;
 				// check that we haven't hit the maximum depth of the table
 				if (x == table.diveTable.length) {
 					// return the current depth if we have hit the max depth
-					return "Your RNT is " + rnt + " minutes.\nYou can dive to a maximum depth of "
+					String newS = "Your RNT is " + rnt + " minutes.\nYou can dive to a maximum depth of "
 							+ table.diveTable[x - 1].diveRow[length].depth + " feet for " + time + " minutes.\n";
+					if (table.diveTable[x].diveRow[length].safetyStop) {
+						newS = newS + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
+								+ " minutes at 15'.\n";
+					}
 				}
 
 			}
@@ -289,7 +310,9 @@ public class DiveCalculator implements ActionListener {
 		return safety;
 	}
 
-	// same goes here, could make one method but time constraints suck
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public String maxTimeForDepthRD(int depth) {
 		String safety = "";
 		int time;
@@ -324,19 +347,19 @@ public class DiveCalculator implements ActionListener {
 		return safety;
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public String newGroup(String initGroup, int minutes) {
 		if (minutes > maxSurfaceTime) {
 			return "A";
 		}
-		if (minutes < minSurfaceTime) {
-			return null;
-		}
 		// First find the column with the init group
 		for (int i = 0; i < sitTable.length; i++) {
 			if (sitTable.sitTable[i].initialGroup == initGroup) {
-				for (int j = 0; j < sitTable.sitTable[i].length; j++) {
-					if (minutes > sitTable.sitTable[i].sitColumn[j].surfaceIntervalTime) {
-						return sitTable.sitTable[i].sitColumn[j - 1].EndGroup;
+				for (int j = sitTable.sitTable[i].length - 1; j >= 0; j--) {
+					if (minutes < sitTable.sitTable[i].sitColumn[j].surfaceIntervalTime) {
+						return  sitTable.sitTable[i].sitColumn[j].EndGroup;
 					}
 				}
 			}
@@ -344,6 +367,9 @@ public class DiveCalculator implements ActionListener {
 		return null;
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public int newRNT(String group, int depth) {
 		for (int i = 0; i < rpTable.repeatDiveTable.length; i++) {
 			if (rpTable.repeatDiveTable[i].group == group) {
@@ -362,6 +388,9 @@ public class DiveCalculator implements ActionListener {
 		return 0;
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	public String maxTimeForDepth(int depth) {
 		String safety = "";
 		// run through table to find right depth
@@ -390,7 +419,7 @@ public class DiveCalculator implements ActionListener {
 	}
 
 	/*
-	 * add check for safety stop.
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
 	 */
 	public String maxDepthForTime(int time) {
 		// to keep the while loop running
@@ -413,22 +442,37 @@ public class DiveCalculator implements ActionListener {
 				// replace safety with current max depth
 				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
 						+ time + " minutes.";
+				if (table.diveTable[x].diveRow[length].safetyStop) {
+					safety = safety + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
+							+ " minutes at 15'.\n";
+				}
 				// increment to next depth
 				x++;
-				// check that we haven't hit the maximum depth of the table
 				if (x == table.diveTable.length) {
+					x= x-1;
 					// return the current depth if we have hit the max depth
-					return "You can dive to a maximum depth of " + table.diveTable[x - 1].diveRow[length].depth
-							+ " feet for " + time + " minutes.";
+					safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth
+							+ " feet for " + time + " minutes.\n";
+					if (table.diveTable[x].diveRow[length].safetyStop) {
+						safety = safety + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
+								+ " minutes at 15'.\n";
+					}
+					while (table.diveTable[x].diveRow[length].safetyStop) {
+						// goes one back to till we find a non safety stop time
+						x--;
+					}
+					// appends longest time allowed without safety stop to safety stop time
+					return "You can dive to " + table.diveTable[x].diveRow[length].depth
+							+ " feet for " + time + " minutes without making a safety stop.\n" + safety;
 				}
-
 			}
+
 		}
 		return safety;
 	}
 
 	/*
-	 * we have verified that both time and depth are non zero integer at this point.
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
 	 */
 	public String diveCalc(int depth, int time) {
 		// if the depth is above the max depth we can automatically return invalid
@@ -478,6 +522,9 @@ public class DiveCalculator implements ActionListener {
 		return safety;
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
 	// generates Table 1 of NAUI dive Tables
 	public static void generateDiveTable() {
 		table.diveTable[0] = new DiveRow(40, 12);
@@ -588,6 +635,10 @@ public class DiveCalculator implements ActionListener {
 
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
+	// generates Table 2 of NAUI dive Tables
 	public static void generateSITTable() {
 		sitTable.sitTable[0] = new SITColumn("A", 1);
 		sitTable.sitTable[0].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[0].initialGroup, "A");
@@ -598,8 +649,8 @@ public class DiveCalculator implements ActionListener {
 
 		sitTable.sitTable[2] = new SITColumn("C", 3);
 		sitTable.sitTable[2].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[2].initialGroup, "A");
-		sitTable.sitTable[2].sitColumn[1] = new SITCell(200, sitTable.sitTable[2].initialGroup, "B");
-		sitTable.sitTable[2].sitColumn[2] = new SITCell(200, sitTable.sitTable[2].initialGroup, "C");
+		sitTable.sitTable[2].sitColumn[1] = new SITCell(289, sitTable.sitTable[2].initialGroup, "B");
+		sitTable.sitTable[2].sitColumn[2] = new SITCell(99, sitTable.sitTable[2].initialGroup, "C");
 
 		sitTable.sitTable[3] = new SITColumn("D", 4);
 		sitTable.sitTable[3].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[3].initialGroup, "A");
@@ -653,6 +704,7 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[8].sitColumn[8] = new SITCell(33, sitTable.sitTable[8].initialGroup, "I");
 
 		sitTable.sitTable[9] = new SITColumn("J", 10);
+		sitTable.sitTable[9].sitColumn[0] = new SITCell(maxSurfaceTime, sitTable.sitTable[9].initialGroup, "A");
 		sitTable.sitTable[9].sitColumn[1] = new SITCell(530, sitTable.sitTable[9].initialGroup, "B");
 		sitTable.sitTable[9].sitColumn[2] = new SITCell(340, sitTable.sitTable[9].initialGroup, "C");
 		sitTable.sitTable[9].sitColumn[3] = new SITCell(243, sitTable.sitTable[9].initialGroup, "D");
@@ -677,6 +729,7 @@ public class DiveCalculator implements ActionListener {
 		sitTable.sitTable[10].sitColumn[10] = new SITCell(28, sitTable.sitTable[10].initialGroup, "K");
 
 		sitTable.sitTable[11] = new SITColumn("L", 12);
+		sitTable.sitTable[11].sitColumn[1] = new SITCell(maxSurfaceTime, sitTable.sitTable[11].initialGroup, "A");
 		sitTable.sitTable[11].sitColumn[1] = new SITCell(552, sitTable.sitTable[11].initialGroup, "B");
 		sitTable.sitTable[11].sitColumn[2] = new SITCell(362, sitTable.sitTable[11].initialGroup, "C");
 		sitTable.sitTable[11].sitColumn[3] = new SITCell(275, sitTable.sitTable[11].initialGroup, "D");
@@ -691,6 +744,10 @@ public class DiveCalculator implements ActionListener {
 
 	}
 
+	/*
+	 * THIS IS A PROTOTYPE AND SHOULD NOT BE TRUSTED WITH YOUR LIFE.
+	 */
+	// generates Table 3 of NAUI dive Tables
 	public static void generateRepeatTable() {
 		rpTable.repeatDiveTable[0] = new RepeatDiveRow("A", 10);
 		rpTable.repeatDiveTable[0].repeatDiveRow[0] = new RepeatDiveCell(rpTable.repeatDiveTable[0].group, 40, 7);
