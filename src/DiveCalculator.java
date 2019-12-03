@@ -110,7 +110,9 @@ public class DiveCalculator implements ActionListener {
 			try {
 				depth = Integer.parseInt(s1);
 				time = Integer.parseInt(s2);
-				if (depth < 130 && depth >= 0) {
+				if (time < 0) {
+					tfa.append("Invalid Time");
+				} else if (depth < 130 && depth >= 0) {
 					// check if its an actual dive or just checking what can be done
 					if (depth == 0 || time == 0) {
 						if (depth == 0) {
@@ -148,41 +150,48 @@ public class DiveCalculator implements ActionListener {
 				time = Integer.parseInt(s1);
 				intervalHours = Integer.parseInt(s3);
 				intervalMinutes = Integer.parseInt(s4);
-				tfa.append("You are resting for " + intervalHours + " hours and " + intervalMinutes + " minutes.\n");
-				// turn SIT into minutes
-				int newTime = intervalHours * 60 + intervalMinutes;
-				// if time is less than minimum exit
-				if (newTime < minSurfaceTime) {
-					tfa.append("Interval time must be larger than 10 minutes");
-				} else {
-					// if time is greater than max SIT auto A
-					if (newTime > maxSurfaceTime) {
-						Group = "A";
-						// else calc new group
+				if (time < 0 || time > 150) {
+					tfa.append("Invalid Time\n");
+				} else if (depth < 130 && depth >= 0) {
+					tfa.append(
+							"You are resting for " + intervalHours + " hours and " + intervalMinutes + " minutes.\n");
+					// turn SIT into minutes
+					int newTime = intervalHours * 60 + intervalMinutes;
+					// if time is less than minimum exit
+					if (newTime < minSurfaceTime) {
+						tfa.append("Interval time must be larger than 10 minutes");
 					} else {
-						System.out.println(Group);
-						Group = newGroup(Group, newTime);
-						System.out.println(Group);
+						// if time is greater than max SIT auto A
+						if (newTime > maxSurfaceTime) {
+							Group = "A";
+							// else calc new group
+						} else {
+							Group = newGroup(Group, newTime);
+						}
+						/*
+						 * PROBLEM HERE when you enter a 0 for time or depth a new group is calculated
+						 * based on surface time, and you must re enter surface time again
+						 */
+						tfa.append("Your new group is " + Group + ".\n");
+						// if depth = 0 run maxDepthForTimeRD
+						if (depth == 0) {
+							tfa.append(maxDepthForTimeRD(time) + "\n");
+							Group = oldGroup;
+							tfa.append("Your group is back to " + Group + ".\n");
+						}
+						// else if time = 0 run maxTimeForDepthRD
+						else if (time == 0) {
+							tfa.append(maxTimeForDepthRD(depth));
+							Group = oldGroup;
+							tfa.append("Your group is back to " + Group + ".\n");
+						}
+						// else run diveCalcRD
+						else {
+							tfa.append(diveCalcRD(depth, time) + "\n");
+						}
 					}
-					/*
-					 * PROBLEM HERE when you enter a 0 for time or depth a new group is calculated
-					 * based on surface time, and you must re enter surface time again
-					 */
-					tfa.append("Your new group is " + Group + ".\n");
-					// if depth = 0 run maxDepthForTimeRD
-					if (depth == 0) {
-						tfa.append(maxDepthForTimeRD(time) + "\n");
-						Group = oldGroup;
-					}
-					// else if time = 0 run maxTimeForDepthRD
-					else if (time == 0) {
-						tfa.append(maxTimeForDepthRD(depth));
-						Group = oldGroup;
-					}
-					// else run diveCalcRD
-					else {
-						tfa.append(diveCalcRD(depth, time) + "\n");
-					}
+				} else {
+					tfa.append("Invalid Depth\n");
 				}
 			} catch (NumberFormatException ex) {
 				tfa.append("Invalid Parameter\n");
@@ -303,6 +312,7 @@ public class DiveCalculator implements ActionListener {
 						newS = newS + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
 								+ " minutes at 15'.\n";
 					}
+					return newS;
 				}
 
 			}
@@ -359,7 +369,7 @@ public class DiveCalculator implements ActionListener {
 			if (sitTable.sitTable[i].initialGroup == initGroup) {
 				for (int j = sitTable.sitTable[i].length - 1; j >= 0; j--) {
 					if (minutes < sitTable.sitTable[i].sitColumn[j].surfaceIntervalTime) {
-						return  sitTable.sitTable[i].sitColumn[j].EndGroup;
+						return sitTable.sitTable[i].sitColumn[j].EndGroup;
 					}
 				}
 			}
@@ -441,7 +451,7 @@ public class DiveCalculator implements ActionListener {
 			} else {
 				// replace safety with current max depth
 				safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth + " feet for "
-						+ time + " minutes.";
+						+ time + " minutes.\n";
 				if (table.diveTable[x].diveRow[length].safetyStop) {
 					safety = safety + "You will need to stop " + table.diveTable[x].diveRow[length].stopTime
 							+ " minutes at 15'.\n";
@@ -449,7 +459,7 @@ public class DiveCalculator implements ActionListener {
 				// increment to next depth
 				x++;
 				if (x == table.diveTable.length) {
-					x= x-1;
+					x = x - 1;
 					// return the current depth if we have hit the max depth
 					safety = "You can dive to a maximum depth of " + table.diveTable[x].diveRow[length].depth
 							+ " feet for " + time + " minutes.\n";
@@ -462,8 +472,8 @@ public class DiveCalculator implements ActionListener {
 						x--;
 					}
 					// appends longest time allowed without safety stop to safety stop time
-					return "You can dive to " + table.diveTable[x].diveRow[length].depth
-							+ " feet for " + time + " minutes without making a safety stop.\n" + safety;
+					return "You can dive to " + table.diveTable[x].diveRow[length].depth + " feet for " + time
+							+ " minutes without making a safety stop.\n" + safety;
 				}
 			}
 
