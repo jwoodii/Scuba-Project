@@ -61,14 +61,14 @@ public class DiveCalculator implements ActionListener {
 		tfim = new JTextField(10);
 		JButton Enter = new JButton("Enter");
 
-		panel.add(Depth); // Components Added using Flow Layout
-		panel.add(tfd);
-		panel.add(Time);
-		panel.add(tft);
 		panel.add(IntervalH);
 		panel.add(tfih);
 		panel.add(IntervalM);
 		panel.add(tfim);
+		panel.add(Depth); // Components Added using Flow Layout
+		panel.add(tfd);
+		panel.add(Time);
+		panel.add(tft);
 		panel.add(Enter);
 		tfim.setEditable(false);
 		tfih.setEditable(false);
